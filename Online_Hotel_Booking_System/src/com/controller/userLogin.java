@@ -33,10 +33,11 @@ public class userLogin extends HttpServlet {
 
 	            // Print user details for debugging
 	            System.out.println("registered_user ID: " + user.getId());
-	            System.out.println("registered_user Name: " + user.getName());
+	            System.out.println("registered_user Name: " + user.getUsername());
 
-	            // Set user details in request attributes
-	            request.setAttribute("userDetails", user);
+	         // Set user details in session attributes
+	            request.getSession().setAttribute("userId", user.getId());
+	            request.getSession().setAttribute("username", user.getUsername());
 	            
 	            // Check user role and navigate accordingly
 	            String role = user.getRole(); // Assuming getRole() returns the user role
@@ -52,9 +53,9 @@ public class userLogin extends HttpServlet {
 	                    request.getRequestDispatcher("views/workerDashboard.jsp").forward(request, response);
 	                    break;
 
-	                case "Admin":
-	                    // Navigate to admin dashboard
-	                    request.getRequestDispatcher("views/adminDashboard.jsp").forward(request, response);
+	                case "Manager":
+	                    // Navigate to Manager dashboard
+	                    request.getRequestDispatcher("views/ManagerDashboard.jsp").forward(request, response);
 	                    break;
 
 	                default:
@@ -66,7 +67,7 @@ public class userLogin extends HttpServlet {
 	        } else {
 	            // If userDetails is empty, handle invalid credentials
 	            request.setAttribute("errorMessage", "Invalid username or password");
-	            request.getRequestDispatcher("views/Login.jsp").forward(request, response);
+	            request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();

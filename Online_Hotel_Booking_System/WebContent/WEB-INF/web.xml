@@ -7,24 +7,11 @@
                              http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
     
-		 <servlet>
-			<servlet-name>register</servlet-name>
-			<servlet-class>com.controller.userRegistration</servlet-class>
-		 </servlet>
-		 <servlet-mapping>
-		 	<servlet-name>register</servlet-name>
-		 	<url-pattern>/userRegistration</url-pattern>
-		 </servlet-mapping>
+		
 		 
-		  <servlet>
-			<servlet-name>Login</servlet-name>
-			<servlet-class>com.controller.userLogin</servlet-class>
-		 </servlet>
-		 <servlet-mapping>
-		 	<servlet-name>Login</servlet-name>
-		 	<url-pattern>/userLogin</url-pattern>
-		 </servlet-mapping>
+		  
 	
 	</web-app>
 </Element>
+
 

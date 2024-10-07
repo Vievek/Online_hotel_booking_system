@@ -14,7 +14,7 @@
         if ("fail".equals(message)) {
     %>
     <script type="text/javascript">
-        alert("Registration Failed! Please try again.");
+        alert("User name not available! try with different user name");
     </script>
     <% } %>
     

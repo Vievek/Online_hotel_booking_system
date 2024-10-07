@@ -35,10 +35,11 @@ public class userRegistration extends HttpServlet {
 			            RequestDispatcher dis = request.getRequestDispatcher("/views/Login.jsp");
 			            dis.forward(request, response);
 			        } else {
-			            // Registration failed, pass a failure message
-			            request.setAttribute("message", "fail");
-			            RequestDispatcher dis = request.getRequestDispatcher("/views/Register.jsp");
-			            dis.forward(request, response);
+			        	// Registration failed, pass a failure message
+			        	request.setAttribute("errorMessage", "Registration failed. Try diffrent Username."); // Set an error message
+			        	RequestDispatcher dis = request.getRequestDispatcher("views/errorPage.jsp"); // Forward to errorPage
+			        	dis.forward(request, response);
+
 		}
 	}
 
