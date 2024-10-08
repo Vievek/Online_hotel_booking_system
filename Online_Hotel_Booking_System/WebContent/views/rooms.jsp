@@ -53,6 +53,7 @@
         }
     </script>
 </head>
+<jsp:include page="userHeader.jsp" />
 <body>
     <button class="button" onclick="roomType(event)">All</button>
     <button class="button" onclick="roomType(event)">Deluxe</button>
