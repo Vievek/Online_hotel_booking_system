@@ -75,6 +75,7 @@
     <c:if test="${not empty room}">
         <c:forEach var="rom" items="${room}">
             <c:if test="${rom.availabilityStatus == 'Available'}">
+                <a href="${pageContext.request.contextPath}/roomDetails?roomId=${rom.roomId}&userId=${ru_id}" >	  
                 <div class="room">
                     <h3>${rom.roomType} (Room ID: ${rom.roomId})</h3>
                     <p>Description: ${rom.description}</p>
@@ -88,6 +89,7 @@
                 	</a>   <% } %>
                     <hr/>
                 </div>
+                </a>
             </c:if>
         </c:forEach>
     </c:if>

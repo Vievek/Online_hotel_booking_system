@@ -149,4 +149,40 @@ public static List<rooms> getFilteredroom3(String acType){
 	
 	return frooms;
 	}
+
+
+public static List<rooms> getSelectedRoom(String r_id){
+	ArrayList<rooms> rooms  = new ArrayList<>();
+	int CovertedId =Integer.parseInt(r_id);
+
+	try {			
+		con = DBconnect.getConnection()		;
+		stmt = con.createStatement();
+		String sql = "select * from rooms where  r_id='"+CovertedId+"'" ;
+		rs=stmt.executeQuery(sql);
+		
+		
+		while(rs.next()) {
+			rooms room = new rooms(
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getInt(4),
+                    rs.getDouble(5),
+                    rs.getString(6),
+                    rs.getString(7),
+                    rs.getString(8),
+                    rs.getString(9),
+                    rs.getString(10),
+                    rs.getString(11)
+            );
+            rooms.add(room);
+		}
+	}
+	catch(Exception e) {
+		e.printStackTrace();
+	}
+	
+	return rooms;
+	}
 }
