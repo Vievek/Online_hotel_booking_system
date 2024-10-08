@@ -35,7 +35,7 @@ public class favouriteRooms extends HttpServlet {
                     System.out.println("No rooms retrieved from the utility.");
                 } else {
                     for (Favourite rom : favourites) {
-                        System.out.println("Favourite Room ID: " + rom.getRoomId());
+                        System.out.println("successfully get Favourite Room ID: " + rom.getRoomId());
                     }
                 }
                 

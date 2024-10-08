@@ -2,7 +2,11 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.model.rooms" %>
 
-
+ <%
+    // Retrieve user ID and username from session
+    Integer userId = (Integer) session.getAttribute("ru_id");
+    String username = (String) session.getAttribute("username");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,6 +82,10 @@
                     <p>Price: $${rom.price}</p>
                     <p>AC Type: ${rom.ac_type}</p>
                     <img src="${rom.img1}" alt="Room Image 1" />
+                    <% if (userId != null && username != null) { %>
+                    <a href="${pageContext.request.contextPath}/addFavouriteRoom?roomId=${rom.roomId}&userId=${ru_id}" >
+                    Add to Favourites
+                	</a>   <% } %>
                     <hr/>
                 </div>
             </c:if>

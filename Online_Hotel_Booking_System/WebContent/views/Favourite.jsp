@@ -21,6 +21,9 @@
                     <p>AC Type: ${rom.ac_type}</p>
                     <p>Availablity sts: ${rom.availabilityStatus}</p>
                     <img src="${rom.img1}" alt="Room Image 1" />
+                    <a href="${pageContext.request.contextPath}/deleteFavouriteRoom?FId=${rom.favouriteID}&userId=${ru_id}" >
+                    Delete from Favourites
+                	</a>
                     <hr/>
                 </div>
         </c:forEach>

@@ -15,6 +15,7 @@ public class Favourite_util {
 	private static Connection con=null;
 	private static Statement stmt =null;
 	private static ResultSet rs = null;
+	private static boolean isSuccess = false;
 	
 	public static List<Favourite> getFavouritesByUserId(int id){
 	
@@ -55,5 +56,59 @@ public class Favourite_util {
 	}
 	
 	return FavouritRooms;
+	}
+	
+	public static boolean insertFavouriteRoom(int r_id,int ru_id) {
+		boolean isSuccess= false;
+		
+		int rid =r_id;
+		int ruid=ru_id;
+		
+		try {
+			
+			con = DBconnect.getConnection()		;
+			stmt = con.createStatement();
+			String sql = "insert into favourite_rooms values(0,'"+rid+"','"+ruid+"')";
+			int rs =stmt.executeUpdate(sql);
+			
+			if(rs > 0) {
+				isSuccess = true;
+			}else {
+				isSuccess =false;
+			}
+			
+			System.out.println(isSuccess);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return isSuccess;
+		
+	}
+	
+	public static boolean deletefavroom(String Id) {
+		int CovertedId =Integer.parseInt(Id);
+
+		try {
+			con = DBconnect.getConnection()		;
+			stmt = con.createStatement();
+			
+			String sql = "delete from favourite_rooms where f_id='"+CovertedId+"'";
+			int rs =stmt.executeUpdate(sql);
+			
+			if(rs > 0) {
+				isSuccess = true;
+			}else {
+				isSuccess =false;
+			}
+			
+			System.out.println(isSuccess);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return isSuccess;
 	}
 }
