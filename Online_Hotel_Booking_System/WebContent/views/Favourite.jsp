@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%
+    // Retrieve user ID and username from session
+    Integer userId = (Integer) session.getAttribute("ru_id");
+    String username = (String) session.getAttribute("username");
+%>
   
 <!DOCTYPE html>
 <html>
@@ -13,6 +18,7 @@
 
 <c:if test="${not empty favouritesList}">
         <c:forEach var="rom" items="${favouritesList}">
+        <a href="${pageContext.request.contextPath}/roomDetails?roomId=${rom.roomId}&userId=${ru_id}" >
                 <div class="room">
                     <h3>${rom.roomType} (Room ID: ${rom.roomId})</h3>
                     <p>Description: ${rom.description}</p>
@@ -26,6 +32,7 @@
                 	</a>
                     <hr/>
                 </div>
+                </a>
         </c:forEach>
     </c:if>
 
