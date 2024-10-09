@@ -16,6 +16,8 @@
 </head>
 <jsp:include page="userHeader.jsp" />
 <body>
+    <form action="${pageContext.request.contextPath}/AddBooking" method="post">
+
     <div class="room-listing">
         <c:if test="${not empty room}">
             <c:forEach var="rom" items="${room}">
@@ -27,7 +29,9 @@
                     <p>AC Type: ${rom.ac_type}</p>
                     <img src="${rom.img1}" alt="Image of ${rom.roomType} (Room ID: ${rom.roomId})" />
                     <hr/>     
-					 <input type="hidden" id="roomPriceHidden" value="${rom.price}"> <!-- Store room price in hidden input -->                            
+					 <input type="hidden"  name="roomPrice" id="roomPriceHidden" value="${rom.price}"> <!-- Store room price in hidden input -->  
+					 <input type="hidden" name="roomId" value="${rom.roomId}"> <!-- Store room ID in hidden input -->	
+					 				                           
                 </div>
                  
             </c:forEach>
@@ -46,9 +50,18 @@
     <p>Room Price: $<span id="roomPriceDisplay">0</span></p> <!-- Initialize room price display -->
     <p>Total Booking Cost: $<span id="totalBookingCost">0</span></p> <!-- Total booking cost displayed here -->
     
-    <form action="service" method="post">
+    <form action="${pageContext.request.contextPath}/AddBooking" method="post">
     
-
+<br>
+	     <input type="hidden" name="userId" value="${userId}"> <!-- Hidden input for user ID -->
+        <input type="hidden" name="totalServiceCost" id="totalServiceCostHidden" value="0"> <!-- Hidden input for total service cost -->
+        <input type="hidden" name="totalCost" id="totalCostHidden" value="0"> <!-- Hidden input for total cost -->
+    	<input type="hidden" name="roomPrice" id="roomPriceHidden" value="0"> <!-- Room price to be passed -->
+        
+        <label>checkInDate</label>
+        <input type="date" name="checkInDate" required> <!-- Check-in date -->
+        <label>checkOutDate</label>
+        <input type="date" name="checkOutDate" required> <!-- Check-out date -->
     
     <c:if test="${not empty services}">
             <c:forEach var="ser" items="${services}">
@@ -69,7 +82,7 @@
             <p>No services available at the moment.</p> <!-- Message for no available rooms -->
         </c:if>
 
-    <input type="submit" value="Submit">
+    <input type="submit" value="Submit" name="Submit">
 </form>
 
     	   <% }
@@ -91,28 +104,49 @@
      <% } %>
      
  <script>
-        // JavaScript to handle the checkbox selection and total cost calculation
+    window.onload = function () {
         let totalCost = 0;
-        let roomPrice = parseFloat(document.getElementById("roomPriceHidden").value) || 0; // Get room price from hidden input
+        let roomPriceElement = document.getElementById("roomPriceHidden");
 
-        // Display initial room price
-        document.getElementById("roomPriceDisplay").innerText = roomPrice.toFixed(2);
+        // Ensure room price is fetched correctly from hidden input
+        let roomPrice = parseFloat(roomPriceElement ? roomPriceElement.value : 0);
 
-        function updateTotal(price, checkbox) {
+        // If the roomPrice is valid, display it, otherwise fallback to 0
+        if (roomPrice > 0) {
+            document.getElementById("roomPriceDisplay").innerText = roomPrice.toFixed(2);
+        } else {
+            document.getElementById("roomPriceDisplay").innerText = "0.00";
+        }
+
+        // Function to update total cost when services are selected/deselected
+        window.updateTotal = function(price, checkbox) {
             if (checkbox.checked) {
-                // Add price to totalCost if the checkbox is selected
+                // Add the service price to totalCost
                 totalCost += price;
             } else {
-                // Subtract price from totalCost if the checkbox is deselected
+                // Subtract the service price from totalCost
                 totalCost -= price;
             }
-            // Update the displayed total cost
+
+            // Update the total services cost display
             document.getElementById("totalCost").innerText = totalCost.toFixed(2);
 
-            // Update the total booking cost
+            // Calculate total booking cost (room price + services cost)
             let totalBookingCost = roomPrice + totalCost;
             document.getElementById("totalBookingCost").innerText = totalBookingCost.toFixed(2);
-        }
-    </script>
+
+            // Update hidden inputs to submit correct values with the form
+            document.getElementById("totalServiceCostHidden").value = totalCost.toFixed(2);
+            document.getElementById("totalCostHidden").value = totalBookingCost.toFixed(2);
+            document.getElementById("roomPriceHidden").value = roomPrice.toFixed(2);
+            
+            console.log(totalCost);
+            console.log(totalBookingCost);
+            console.log(roomPrice);
+
+        };
+    };
+</script>
+
 </body>
 </html>
