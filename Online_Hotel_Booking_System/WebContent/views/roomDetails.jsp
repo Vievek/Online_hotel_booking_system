@@ -29,5 +29,20 @@
             <p>No rooms available at the moment.</p> <!-- Message for no available rooms -->
         </c:if>
     </div>
+    
+    <div class="room-listing">
+        <c:if test="${not empty services}">
+            <c:forEach var="ser" items="${services}">
+                <div class="room">
+                  <hr/>
+                    <p>name: ${ser.name}   price: ${ser.price}</p>
+                    <hr/>
+                </div>
+            </c:forEach>
+        </c:if>
+        <c:if test="${empty services}">
+            <p>No services available at the moment.</p> <!-- Message for no available rooms -->
+        </c:if>
+    </div>
 </body>
 </html>

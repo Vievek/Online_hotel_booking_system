@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.model.Services;
 import com.model.rooms;
+import com.util.Services_util;
 import com.util.rooms_util;
 
 /**
@@ -39,9 +41,31 @@ public class roomDetails extends HttpServlet {
 	        // Check if the list is empty
 	        if (room == null || room.isEmpty()) {
 	            // Set error message and dispatch to the error page
-	            request.setAttribute("errorMessage", "Details not available.");
+	            request.setAttribute("errorMessage", "room detail not available.");
 	            request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
 	        } else {
+	        	 
+	   	     List<Services> services = Services_util.getAllServices();
+	   	        
+	   	        // Debug: Log room data to the server console
+	   	        if (services == null || services.isEmpty()) {
+	   	            System.out.println("No services retrieved from the utility.");
+	   	        } else {
+	   	            for (Services ser : services) {
+	   	                System.out.println("ser ID: " + ser.getServices_id());
+	   	            }
+	   	        }
+	   	        
+	   	        // Check if the list is empty
+	   	        if (services == null || services.isEmpty()) {
+	   	            // Set error message and dispatch to the error page
+	   	            request.setAttribute("errorMessage", "services not available.");
+	   	            request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
+	   	        } else {
+	   	            // Set the services as an attribute and forward to the JSP
+	   	            request.setAttribute("services", services);
+	   	        }
+	        	     	
 	            // Set the rooms as an attribute and forward to the JSP
 	            request.setAttribute("room", room);
 	            request.getRequestDispatcher("views/roomDetails.jsp").forward(request, response);
