@@ -74,8 +74,8 @@
     </table>
     
             <a href="${pageContext.request.contextPath}/DeleteBooking?bId=${booking.id}" >Cancel order</a>
-    
-    
+            <a href="${pageContext.request.contextPath}/UpdateBookingRead?bId=${booking.id}" >Edit booking</a>
+                
 </c:if>
 
 

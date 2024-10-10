@@ -22,54 +22,90 @@ public class roomDetails extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 String roomId = request.getParameter("roomId");
-	     String userId = request.getParameter("userId");
-	     
-	     System.out.println(roomId + userId);
-	     
-	     List<rooms> room = rooms_util.getSelectedRoom(roomId);
-	        
-	        // Debug: Log room data to the server console
-	        if (room == null || room.isEmpty()) {
-	            System.out.println("No rooms retrieved from the utility.");
-	        } else {
-	            for (rooms rom : room) {
-	                System.out.println("Room ID: " + rom.getRoomId());
-	            }
-	        }
-	        
-	        // Check if the list is empty
-	        if (room == null || room.isEmpty()) {
-	            // Set error message and dispatch to the error page
-	            request.setAttribute("errorMessage", "room detail not available.");
-	            request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
-	        } else {
-	        	 
-	   	     List<Services> services = Services_util.getAllServices();
-	   	        
-	   	        // Debug: Log room data to the server console
-	   	        if (services == null || services.isEmpty()) {
-	   	            System.out.println("No services retrieved from the utility.");
-	   	        } else {
-	   	            for (Services ser : services) {
-	   	                System.out.println("ser ID: " + ser.getServices_id());
-	   	            }
-	   	        }
-	   	        
-	   	        // Check if the list is empty
-	   	        if (services == null || services.isEmpty()) {
-	   	            // Set error message and dispatch to the error page
-	   	            request.setAttribute("errorMessage", "services not available.");
-	   	            request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
-	   	        } else {
-	   	            // Set the services as an attribute and forward to the JSP
-	   	            request.setAttribute("services", services);
-	   	        }
-	        	     	
-	            // Set the rooms as an attribute and forward to the JSP
-	            request.setAttribute("room", room);
-	            request.getRequestDispatcher("views/roomDetails.jsp").forward(request, response);
-	        }
-	}
+		// Retrieve roomId and userId from request parameters
+		String roomIdParam = request.getParameter("roomId");
+		String userIdParam = request.getParameter("userId");
 
+		Integer IroomId = null;
+		Integer IuserId = null;
+
+		try {
+			if (roomIdParam != null) {
+				IroomId = Integer.parseInt(roomIdParam); // Convert String to Integer
+			}
+			if (userIdParam != null) {
+				IuserId = Integer.parseInt(userIdParam); // Convert String to Integer
+			}
+		} catch (NumberFormatException e) {
+			// Log parsing error
+			e.printStackTrace();
+		}
+
+		// Log the retrieved roomId and userId
+		System.out.println("roomId: " + IroomId + ", userId: " + IuserId);
+
+		// Now, try to retrieve roomId and userId as attributes (set by another servlet or JSP)
+		Object roomIdAttr = request.getAttribute("UroomId");
+		Object userIdAttr = request.getAttribute("UuserId");
+
+		if (roomIdAttr instanceof Integer) {
+			IroomId = (Integer) roomIdAttr; // Safely cast if it's an Integer
+		}
+
+		if (userIdAttr instanceof Integer) {
+			IuserId = (Integer) userIdAttr; // Safely cast if it's an Integer
+		}
+
+		// Log roomId and userId after checking the attributes
+		System.out.println("Final roomId: " + IroomId + ", userId: " + IuserId);
+
+		// Fetch selected room details
+		List<rooms> room = rooms_util.getSelectedRoom(IroomId);
+		if (room == null) {
+			System.out.println("Error: room_util.getSelectedRoom returned null.");
+			request.setAttribute("errorMessage", "room detail not available.");
+			request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
+			return; // Stop further execution
+		}
+
+		if (room.isEmpty()) {
+			System.out.println("No rooms retrieved from the utility.");
+			request.setAttribute("errorMessage", "room detail not available.");
+			request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
+			return; // Stop further execution
+		}
+
+		// Log retrieved room details
+		for (rooms rom : room) {
+			System.out.println("Room ID: " + rom.getRoomId());
+		}
+
+		// Fetch all services
+		List<Services> services = Services_util.getAllServices();
+		if (services == null) {
+			System.out.println("Error: Services_util.getAllServices returned null.");
+			request.setAttribute("errorMessage", "services not available.");
+			request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
+			return; // Stop further execution
+		}
+
+		if (services.isEmpty()) {
+			System.out.println("No services retrieved from the utility.");
+			request.setAttribute("errorMessage", "services not available.");
+			request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
+			return; // Stop further execution
+		}
+
+		// Log retrieved services details
+		for (Services ser : services) {
+			System.out.println("Service ID: " + ser.getServices_id());
+		}
+
+		// Set room and services attributes for the JSP
+		request.setAttribute("room", room);
+		request.setAttribute("services", services);
+
+		// Forward to the room details JSP
+		request.getRequestDispatcher("views/roomDetails.jsp").forward(request, response);
+	}
 }

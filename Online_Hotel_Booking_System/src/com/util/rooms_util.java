@@ -151,14 +151,14 @@ public static List<rooms> getFilteredroom3(String acType){
 	}
 
 
-public static List<rooms> getSelectedRoom(String r_id){
+public static List<rooms> getSelectedRoom(int r_id){
 	ArrayList<rooms> rooms  = new ArrayList<>();
-	int CovertedId =Integer.parseInt(r_id);
+	
 
 	try {			
 		con = DBconnect.getConnection()		;
 		stmt = con.createStatement();
-		String sql = "select * from rooms where  r_id='"+CovertedId+"'" ;
+		String sql = "select * from rooms where  r_id='"+r_id+"'" ;
 		rs=stmt.executeQuery(sql);
 		
 		

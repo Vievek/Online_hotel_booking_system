@@ -96,6 +96,12 @@ public class Booking_util {
 	                            rs.getInt("ru_id"),
 	                            rs.getInt("r_id")
 	                        );
+	                        
+	                        System.out.println(bookingDetails.getR_id());
+	                        System.out.println(bookingDetails.getRu_id());
+	                        
+	                      
+	                        
 	                    }
 	                }
 	            }

@@ -5,6 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.model.BookingServices;
 
 public class BookingServices_util {
 
@@ -189,7 +193,74 @@ public class BookingServices_util {
         return isDeleted; // Return whether the booking service and booking were deleted successfully
     }
 
+    public static List<Integer> getBookedServiceIdsByBookingId(int bookingId) {
+        List<Integer> serviceIds = new ArrayList<>();
+        Connection con = null; // Ensure connection is defined
 
+        try {
+            con = DBconnect.getConnection();
+            
+            String sql = "SELECT services_id FROM booking_services WHERE b_id = ?";
+            PreparedStatement preparedStatement = con.prepareStatement(sql); // Removed the extra parenthesis
 
+            preparedStatement.setInt(1, bookingId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    serviceIds.add(resultSet.getInt("services_id"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Handle exceptions properly in real applications
+        } finally {
+            if (con != null) {
+                try {
+                    con.close(); // Close the connection to avoid leaks
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return serviceIds;
+    }
+    public static List<BookingServices> getBookingServices(int bid) {
+        List<BookingServices> services = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            con = DBconnect.getConnection();
+            // Updated SQL query without worker table join
+            String sql = "SELECT bs.date, bs.start_time, bs.end_time, bs.services_id " +
+                         "FROM booking_services bs " +
+                         "WHERE bs.b_id = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, bid);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                BookingServices service = new BookingServices();
+                service.setDate(rs.getString("date"));
+                service.setStartTime(rs.getString("start_time"));
+                service.setEndTime(rs.getString("end_time"));
+                service.setServicesId(rs.getInt("services_id"));
+                // Removed worker name retrieval
+                services.add(service);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null; // or handle error as needed
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pstmt != null) pstmt.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return services;
+    }
 
 }

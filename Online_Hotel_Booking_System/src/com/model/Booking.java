@@ -74,6 +74,19 @@ public class Booking {
 		return r_id;
 	}
 
-	
+	@Override
+    public String toString() {
+        return "Booking{" +
+                "b_id=" + id +
+                ", room_price='" + room_price + '\'' +
+                ", service_price='" + service_price + '\'' +
+                ", total_amount='" + total_amount + '\'' +
+                ", check_in='" + checkin + '\'' +
+                ", check_out='" + checkout + '\'' +
+                ", payment_status='" + payment_status + '\'' +
+                ", ru_id=" + ru_id +
+                ", r_id=" + r_id +
+                '}';
+    }
 	
 }

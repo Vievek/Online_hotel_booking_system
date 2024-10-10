@@ -54,30 +54,61 @@
     
 <br>
 	     <input type="hidden" name="userId" value="${ru_id}"> <!-- Hidden input for user ID -->
-        <input type="hidden" name="totalServiceCost" id="totalServiceCostHidden" value="0"> <!-- Hidden input for total service cost -->
-        <input type="hidden" name="totalCost" id="totalCostHidden" value="0"> <!-- Hidden input for total cost -->
-    	<input type="hidden" name="roomPrice" id="roomPriceHidden" value="0"> <!-- Room price to be passed -->
+        <input type="hidden" name="totalServiceCost" id="totalServiceCostHidden" value="${booking.service_price}"> <!-- Hidden input for total service cost -->
+        <input type="hidden" name="totalCost" id="totalCostHidden" value="${booking.total_amount}"> <!-- Hidden input for total cost -->
+    	<input type="hidden" name="roomPrice" id="roomPriceHidden" value="${booking.room_price}"> <!-- Room price to be passed -->
         
         <label>checkInDate</label>
-        <input type="date" name="checkInDate" required> <!-- Check-in date -->
+        <input type="date" name="checkInDate"  value=${booking.checkin} required> <!-- Check-in date -->
         <label>checkOutDate</label>
-        <input type="date" name="checkOutDate" required> <!-- Check-out date -->
+        <input type="date" name="checkOutDate" value=${booking.checkout} required> <!-- Check-out date -->
     
     <c:if test="${not empty services}">
-            <c:forEach var="ser" items="${services}">
+    <c:forEach var="ser" items="${services}">
+        <c:set var="isServiceFound" value="false" /> 
+        
+        <c:forEach var="service" items="${Rservices}">
+            <c:if test="${service.servicesId eq ser.services_id}">
                 <div class="room">           
                     <label>${ser.name}</label>
-				    <input type="text" id="${ser.services_id}_date" name="${ser.services_id}Date" value="Jun 10, 2024">
-				    <input type="time" id="${ser.services_id}_time_start" name="${ser.services_id}TimeStart" value="09:41">
-				    <input type="time" id="${ser.services_id}_time_end" name="${ser.services_id}TimeEnd" value="09:41">
-				    <label>${ser.price}</label>
-					<input type="checkbox" id="${ser.services_id}_selected" name="${ser.services_id}Selected" value="1" 
-                   onclick="updateTotal(${ser.price}, this)">				    
-                   <br>
+                    <input type="date" id="${ser.services_id}_date" name="${ser.services_id}Date" value="${service.date}">
+                    <input type="time" id="${ser.services_id}_time_start" name="${ser.services_id}TimeStart" value="${service.startTime}">
+                    <input type="time" id="${ser.services_id}_time_end" name="${ser.services_id}TimeEnd" value="${service.endTime}">
+                    <label>${ser.price}</label>
+                    <c:set var="serviceKey" value="${ser.services_id}Service" />
+					<input type="checkbox" 
+			            id="${ser.services_id}_selected" 
+			            name="${ser.services_id}Selected" 
+			            value="yes"
+			            <c:if test="${requestScope[serviceKey] eq 'yes'}">checked</c:if>
+			            onclick="updateTotal(${ser.price}, this)">
+                    <br>
                     <hr/>
                 </div>
-            </c:forEach>
+                <c:set var="isServiceFound" value="true" />
+            </c:if>
+        </c:forEach>
+
+        <c:if test="${not isServiceFound}">
+            <!-- Display form for services not found in Rservices -->
+            <div class="room">           
+                <label>${ser.name}</label>
+                <input type="date" id="${ser.services_id}_date" name="${ser.services_id}Date">
+                <input type="time" id="${ser.services_id}_time_start" name="${ser.services_id}TimeStart">
+                <input type="time" id="${ser.services_id}_time_end" name="${ser.services_id}TimeEnd">
+                <label>${ser.price}</label>
+                <input type="checkbox" 
+                    id="${ser.services_id}_selected" 
+                    name="${ser.services_id}Selected" 
+                    value="no"
+                    onclick="updateTotal(${ser.price}, this)">
+                <br>
+                <hr/>
+            </div>
         </c:if>
+    </c:forEach>
+</c:if>
+
         <c:if test="${empty services}">
             <p>No services available at the moment.</p> <!-- Message for no available rooms -->
         </c:if>
