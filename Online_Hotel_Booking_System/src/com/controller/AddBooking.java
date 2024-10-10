@@ -81,28 +81,69 @@ public class AddBooking extends HttpServlet {
 
         if (bid > 0) {
             boolean success = true;
+            boolean delete = true;
 
-            // Process each selected service
+         // Process each selected service
             if (spaSelected.equals("Yes")) {
-                success &= BookingServices_util.insertBookingServices(formatDate(spaDate), spaTimeStart, spaTimeEnd, 1, bid) > 0;
-            }
-            if (cleaningSelected.equals("Yes")) {
-                success &= BookingServices_util.insertBookingServices(formatDate(cleaningDate), cleaningTimeStart, cleaningTimeEnd, 2, bid) > 0;
-            }
-            if (laundrySelected.equals("Yes")) {
-                success &= BookingServices_util.insertBookingServices(formatDate(laundryDate), laundryTimeStart, laundryTimeEnd, 3, bid) > 0;
-            }
-            if (fitnessSelected.equals("Yes")) {
-                success &= BookingServices_util.insertBookingServices(formatDate(fitnessDate), fitnessTimeStart, fitnessTimeEnd, 4, bid) > 0;
-            }
-            if (petSelected.equals("Yes")) {
-                success &= BookingServices_util.insertBookingServices(formatDate(petDate), petTimeStart, petTimeEnd, 5, bid) > 0;
-            }
-            if (chefSelected.equals("Yes")) {
-                success &= BookingServices_util.insertBookingServices(formatDate(chefDate), chefTimeStart, chefTimeEnd, 6, bid) > 0;
+                success = BookingServices_util.insertBookingServices(formatDate(spaDate), spaTimeStart, spaTimeEnd, 1, bid);
+                if (!success) {
+                	delete = BookingServices_util.deleteBookingServices(bid);
+                	request.setAttribute("errorMessage", "Spa workers not available for the moment. Sorry for the inconvenience.");
+                    request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
+                    return; // Stop further processing
+                }
             }
 
-           
+            if (cleaningSelected.equals("Yes")) {
+                success = BookingServices_util.insertBookingServices(formatDate(cleaningDate), cleaningTimeStart, cleaningTimeEnd, 2, bid);
+                if (!success) {
+                	delete = BookingServices_util.deleteBookingServices(bid);
+                    request.setAttribute("errorMessage", "Cleaning workers not available for the moment. Sorry for the inconvenience.");
+                    request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
+                    return; // Stop further processing
+                }
+            }
+
+            if (laundrySelected.equals("Yes")) {
+                success = BookingServices_util.insertBookingServices(formatDate(laundryDate), laundryTimeStart, laundryTimeEnd, 3, bid);
+                if (!success) {
+                	delete = BookingServices_util.deleteBookingServices(bid);
+                    request.setAttribute("errorMessage", "Laundry workers not available for the moment. Sorry for the inconvenience.");
+                    request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
+                    return; // Stop further processing
+                }
+            }
+
+            if (fitnessSelected.equals("Yes")) {
+                success = BookingServices_util.insertBookingServices(formatDate(fitnessDate), fitnessTimeStart, fitnessTimeEnd, 4, bid);
+                if (!success) {
+                	delete = BookingServices_util.deleteBookingServices(bid);
+                    request.setAttribute("errorMessage", "Fitness workers not available for the moment. Sorry for the inconvenience.");
+                    request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
+                    return; // Stop further processing
+                }
+            }
+
+            if (petSelected.equals("Yes")) {
+                success = BookingServices_util.insertBookingServices(formatDate(petDate), petTimeStart, petTimeEnd, 5, bid);
+                if (!success) {
+                	delete = BookingServices_util.deleteBookingServices(bid);
+                    request.setAttribute("errorMessage", "Pet care workers not available for the moment. Sorry for the inconvenience.");
+                    request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
+                    return; // Stop further processing
+                }
+            }
+
+            if (chefSelected.equals("Yes")) {
+                success = BookingServices_util.insertBookingServices(formatDate(chefDate), chefTimeStart, chefTimeEnd, 6, bid);
+                if (!success) {
+                	delete = BookingServices_util.deleteBookingServices(bid);
+                    request.setAttribute("errorMessage", "Chef workers not available for the moment. Sorry for the inconvenience.");
+                    request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
+                    return; // Stop further processing
+                }
+            }
+
                 request.setAttribute("bid", bid);
                 request.getRequestDispatcher("ReadBooking").forward(request, response);
            

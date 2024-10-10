@@ -72,7 +72,13 @@
             <td>${booking.r_id}</td>
         </tr>
     </table>
+    
+            <a href="${pageContext.request.contextPath}/DeleteBooking?bId=${booking.id}" >Cancel order</a>
+    
+    
 </c:if>
+
+
 
 <!-- If booking object is not available -->
 <c:if test="${empty booking}">
