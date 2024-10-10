@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.util.BookingServices_util;
 import com.util.Booking_util;
 import com.util.Favourite_util;
 
@@ -87,31 +88,39 @@ public class AddBooking extends HttpServlet {
         
         int bid = Booking_util.insertBooking(roomPriceStr,totalServiceCostStr,totalCostStr,checkInDate,checkOutDate,userId,roomId);
 		
-
-        if (spaSelected.equals("Yes")) {
-            //serviceDAO.saveService("Spa", spaDate, spaTimeStart, spaTimeEnd, spaSelected, booking.getBookingId());
-        	System.out.println(spaDate+ spaTimeStart+ spaTimeEnd);
-        }
-        if (cleaningSelected.equals("Yes")) {
-            //serviceDAO.saveService("Cleaning", cleaningDate, cleaningTimeStart, cleaningTimeEnd, cleaningSelected, booking.getBookingId());
-        	System.out.println( cleaningDate+ cleaningTimeStart+ cleaningTimeEnd);
-        }
-        if (laundrySelected.equals("Yes")) {
-            //serviceDAO.saveService("Laundry", laundryDate, laundryTimeStart, laundryTimeEnd, laundrySelected, booking.getBookingId());
-        	System.out.println(laundryDate+ laundryTimeStart +laundryTimeEnd);
-        }
-        if (fitnessSelected.equals("Yes")) {
-            //serviceDAO.saveService("Fitness Services", fitnessDate, fitnessTimeStart, fitnessTimeEnd, fitnessSelected, booking.getBookingId());
-        	System.out.println(fitnessDate+ fitnessTimeStart+ fitnessTimeEnd);
-        }
-        if (petSelected.equals("Yes")) {
-            //saveService("Pet Services", petDate, petTimeStart, petTimeEnd, petSelected, booking.getBookingId());
-        	System.out.println(petDate+ petTimeStart+ petTimeEnd);
-        }
-        if (chefSelected.equals("Yes")) {
-            //serviceDAO.saveService("Private Chef or Dining", chefDate, chefTimeStart, chefTimeEnd, chefSelected, booking.getBookingId());
-        	System.out.println(chefDate+ chefTimeStart+ chefTimeEnd);
-        }
+        if (bid > 0) {
+	        if (spaSelected.equals("Yes")) {
+	            int bsid = BookingServices_util.insertBookingServices( spaDate, spaTimeStart, spaTimeEnd,1,bid);
+	        	System.out.println(spaDate+ spaTimeStart+ spaTimeEnd);
+	        }
+	        if (cleaningSelected.equals("Yes")) {
+	        	int bsid = BookingServices_util.insertBookingServices( cleaningDate, cleaningTimeStart, cleaningTimeEnd,2 ,bid);
+	        	System.out.println( cleaningDate+ cleaningTimeStart+ cleaningTimeEnd);
+	        }
+	        if (laundrySelected.equals("Yes")) {
+	        	int bsid = BookingServices_util.insertBookingServices( laundryDate, laundryTimeStart, laundryTimeEnd,3,bid);
+	        	System.out.println(laundryDate+ laundryTimeStart +laundryTimeEnd);
+	        }
+	        if (fitnessSelected.equals("Yes")) {
+	        	int bsid = BookingServices_util.insertBookingServices( fitnessDate, fitnessTimeStart, fitnessTimeEnd,4,bid);
+	        	System.out.println(fitnessDate+ fitnessTimeStart+ fitnessTimeEnd);
+	        }
+	        if (petSelected.equals("Yes")) {
+	        	int bsid = BookingServices_util.insertBookingServices( petDate, petTimeStart, petTimeEnd,5,bid);
+	        	System.out.println(petDate+ petTimeStart+ petTimeEnd);
+	        }
+	        if (chefSelected.equals("Yes")) {
+	        	int bsid = BookingServices_util.insertBookingServices(chefDate, chefTimeStart, chefTimeEnd,6,bid);
+	        }
+	    	// If everything is correct, redirect to readBooking with bid as an attribute
+			request.setAttribute("bid", bid);
+			request.getRequestDispatcher("ReadBooking").forward(request, response);
+		} else {
+			// If booking failed, navigate to the error page with an error message
+			request.setAttribute("errorMessage", "Booking failed. Please try again.");
+			request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
+		}
+	
 	}
 
 }

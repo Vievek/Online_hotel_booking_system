@@ -11,9 +11,22 @@ public class Booking {
 	private int ru_id;
 	private int r_id;
 	
+	
+	public Booking() {
+		this.id = 0;
+		this.room_price = "";
+		this.service_price = "";
+		this.total_amount = "";
+		this.checkin = "";
+		this.checkout = "";
+		this.payment_status = "";
+		this.ru_id = 0;
+		this.r_id = 0;
+	}
+
 	public Booking(int id, String room_price, String service_price, String total_amount, String checkin,
 			String checkout, String payment_status, int ru_id, int r_id) {
-		super();
+
 		this.id = id;
 		this.room_price = room_price;
 		this.service_price = service_price;

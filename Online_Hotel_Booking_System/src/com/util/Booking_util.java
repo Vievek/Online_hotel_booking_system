@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import com.model.Booking;
+
 public class Booking_util {
 
 		private static Connection con=null;
@@ -61,6 +63,49 @@ public class Booking_util {
 
 	        return lastInsertedId; // Return the last inserted ID or -1 if failed
 	    }
+	    
+	    public static Booking getBookingDetails(int bid) {
+	        Booking bookingDetails = null;
+
+	        try {
+	            // Get a connection from the database
+	            con = DBconnect.getConnection();
+
+	            // SQL query to select booking details for a specific bid
+	            String sql = "SELECT b_id, room_price, service_price, total_amount, checkin, checkout, payment_status, ru_id, r_id " +
+	                         "FROM booking WHERE b_id = ?";
+
+	            // Use PreparedStatement to prevent SQL injection
+	            try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+	                pstmt.setInt(1, bid);  // Set the bid parameter
+
+	                // Execute the query
+	                try (ResultSet rs = pstmt.executeQuery()) {
+	                    if (rs.next()) {
+	                        // If booking details are found, create a Booking object and set its properties
+	                        bookingDetails = new Booking(
+	                            rs.getInt("b_id"),
+	                            rs.getString("room_price"),
+	                            rs.getString("service_price"),
+	                            rs.getString("total_amount"),
+	                            rs.getString("checkin"),
+	                            rs.getString("checkout"),
+	                            rs.getString("payment_status"),
+	                            rs.getInt("ru_id"),
+	                            rs.getInt("r_id")
+	                        );
+	                    }
+	                }
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace(); // Handle exceptions by printing the stack trace
+	        }
+
+	        return bookingDetails; // Return the booking details or null if not found
+	    }
+
+	    
+	   
 	}
 
 	
