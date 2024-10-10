@@ -38,4 +38,8 @@ public class ReadBooking extends HttpServlet {
       
 
 }
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Call doGet() to handle the POST request in the same way as GET
+        doGet(request, response);
+    }
 }

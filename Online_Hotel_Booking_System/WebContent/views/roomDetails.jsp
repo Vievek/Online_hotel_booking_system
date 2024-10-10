@@ -53,7 +53,7 @@
     <form action="${pageContext.request.contextPath}/AddBooking" method="post">
     
 <br>
-	     <input type="hidden" name="userId" value="${userId}"> <!-- Hidden input for user ID -->
+	     <input type="hidden" name="userId" value="${ru_id}"> <!-- Hidden input for user ID -->
         <input type="hidden" name="totalServiceCost" id="totalServiceCostHidden" value="0"> <!-- Hidden input for total service cost -->
         <input type="hidden" name="totalCost" id="totalCostHidden" value="0"> <!-- Hidden input for total cost -->
     	<input type="hidden" name="roomPrice" id="roomPriceHidden" value="0"> <!-- Room price to be passed -->

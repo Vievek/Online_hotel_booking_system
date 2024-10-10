@@ -18,13 +18,15 @@ public class Booking_util {
 	    public static int insertBooking(String room_price, String service_price, String total_amount, String checkin,
 	                                     String checkout, int ru_id, int r_id) {
 	        int lastInsertedId = -1;
+	        System.out.println("Inserting booking for ru_id: " + ru_id);
+
 	        
 	        try {
 	            con = DBconnect.getConnection();
 	            stmt = con.createStatement();
 
 	            // Use PreparedStatement to avoid SQL injection
-	            String sql = "INSERT INTO booking (room_price, service_price, total_amount, checkin, checkout, payment_status, ru_id, r_id) " +
+	            String sql = "INSERT INTO booking (room_price, service_price, total_amount, check_in, check_out, payment_status, ru_id, r_id) " +
 	                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 	            // Using PreparedStatement
@@ -72,7 +74,7 @@ public class Booking_util {
 	            con = DBconnect.getConnection();
 
 	            // SQL query to select booking details for a specific bid
-	            String sql = "SELECT b_id, room_price, service_price, total_amount, checkin, checkout, payment_status, ru_id, r_id " +
+	            String sql = "SELECT b_id, room_price, service_price, total_amount, check_in, check_out, payment_status, ru_id, r_id " +
 	                         "FROM booking WHERE b_id = ?";
 
 	            // Use PreparedStatement to prevent SQL injection
@@ -88,8 +90,8 @@ public class Booking_util {
 	                            rs.getString("room_price"),
 	                            rs.getString("service_price"),
 	                            rs.getString("total_amount"),
-	                            rs.getString("checkin"),
-	                            rs.getString("checkout"),
+	                            rs.getString("check_in"),
+	                            rs.getString("check_out"),
 	                            rs.getString("payment_status"),
 	                            rs.getInt("ru_id"),
 	                            rs.getInt("r_id")
