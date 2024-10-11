@@ -155,19 +155,19 @@ public class AddBooking extends HttpServlet {
             request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
         }
     }
-
     public String formatDate(String dateStr) {
-        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("MMM dd, yyyy");
+        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Updated input format
         DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         try {
             LocalDate date = LocalDate.parse(dateStr, inputFormat);
             return date.format(outputFormat);
         } catch (DateTimeParseException e) {
-            e.printStackTrace(); // You can log the error or handle it as needed
-            return null;
+            e.printStackTrace(); // Log the error or handle it as needed
+            return null; // Return null or handle the error as appropriate
         }
     }
+
 
 
     private double parseDouble(String value) {

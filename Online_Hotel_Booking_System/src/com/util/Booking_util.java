@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.model.Booking;
 
@@ -142,8 +144,8 @@ public class Booking_util {
 	        return isUpdated; // Return true if the update was successful, otherwise false
 	    }
 	    
-	    public static Booking getBookingDetailsByRuId(int ruId) {
-	        Booking bookingDetails = null; // Initialize the Booking object
+	    public static List<Booking> getBookingDetailsByRuId(int ruId) {
+	        List<Booking> bookingList = new ArrayList<>(); // Initialize the list to hold Booking objects
 
 	        try {
 	            // Get a connection from the database
@@ -151,7 +153,7 @@ public class Booking_util {
 
 	            // SQL query to select booking details for a specific ru_id
 	            String sql = "SELECT b_id, room_price, service_price, total_amount, check_in, check_out, payment_status, ru_id, r_id " +
-	                         "FROM booking WHERE ru_id = ?"; // Adjusted query to use ru_id
+	                         "FROM booking WHERE ru_id = ?"; // Query to find all bookings for the given ru_id
 
 	            // Use PreparedStatement to prevent SQL injection
 	            try (PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -159,9 +161,9 @@ public class Booking_util {
 
 	                // Execute the query
 	                try (ResultSet rs = pstmt.executeQuery()) {
-	                    if (rs.next()) { // Check if there is at least one result
-	                        // Create a Booking object and set its properties
-	                        bookingDetails = new Booking(
+	                    while (rs.next()) { // Iterate through all results
+	                        // Create a new Booking object and set its properties
+	                        Booking bookingDetails = new Booking(
 	                            rs.getInt("b_id"),
 	                            rs.getString("room_price"),
 	                            rs.getString("service_price"),
@@ -174,8 +176,11 @@ public class Booking_util {
 	                        );
 
 	                        // Optional: Print the details for debugging
-	                        System.out.println(bookingDetails.getR_id());
-	                        System.out.println(bookingDetails.getRu_id());
+	                        System.out.println("Booking ID: " + bookingDetails.getId());
+	                        System.out.println("RU ID: " + bookingDetails.getRu_id());
+
+	                        // Add the Booking object to the list
+	                        bookingList.add(bookingDetails);
 	                    }
 	                }
 	            }
@@ -183,7 +188,7 @@ public class Booking_util {
 	            e.printStackTrace(); // Handle exceptions by printing the stack trace
 	        }
 
-	        return bookingDetails; // Return the booking details or null if not found
+	        return bookingList; // Return the list of Booking objects (can be empty if no bookings found)
 	    }
 
 	   

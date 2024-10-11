@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.model.Payment;
 
@@ -24,10 +26,10 @@ public class Payment_util {
 	            // Get a connection from the database (assuming DBconnect is your connection class)
 	            con = DBconnect.getConnection();
 
-	            // SQL query to select payment details for a specific bId
 	            String sql = "SELECT p_id, amount, payment_type, remaining_amount, b_id " +
-	                         "FROM payment WHERE b_id = ?" +
-	                         "ORDER BY p_id DESC LIMIT 1"; 
+	                    "FROM payment WHERE b_id = ? " + // Added a space before ORDER BY
+	                    "ORDER BY p_id DESC LIMIT 1";
+
 	            
 	            // Use PreparedStatement to prevent SQL injection
 	            try (PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -113,6 +115,54 @@ public class Payment_util {
 	            }
 
 	            return isSuccess; // Return whether the insertion was successful
+	        }
+	        
+	        public static List<Payment> getAllPaymentDetails(int bId) {
+	            List<Payment> paymentList = new ArrayList<>(); // List to store Payment objects
+	            Connection con = null;
+
+	            try {
+	                // Get a connection from the database (assuming DBconnect is your connection class)
+	                con = DBconnect.getConnection();
+
+	                // SQL query to select all payment details for a specific bId, including payment_date
+	                String sql = "SELECT p_id, amount, payment_type, remaining_amount, b_id, payment_date " +
+	                             "FROM payment WHERE b_id = ? " +
+	                             "ORDER BY p_id DESC"; 
+	                
+	                // Use PreparedStatement to prevent SQL injection
+	                try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+	                    pstmt.setInt(1, bId);  // Set the bId parameter
+
+	                    // Execute the query
+	                    try (ResultSet rs = pstmt.executeQuery()) {
+	                        // Iterate through the result set and create Payment objects
+	                        while (rs.next()) {
+	                            Payment payment = new Payment(
+	                                rs.getInt("p_id"),
+	                                rs.getString("amount"),
+	                                rs.getString("payment_type"),
+	                                rs.getString("remaining_amount"),
+	                                rs.getInt("b_id"),
+	                                rs.getString("payment_date") // Retrieve payment_date and set it in Payment object
+	                            );
+	                            paymentList.add(payment); // Add the Payment object to the list
+	                        }
+	                    }
+	                }
+	            } catch (Exception e) {
+	                e.printStackTrace(); // Handle exceptions by printing the stack trace
+	            } finally {
+	                try {
+	                    if (con != null) {
+	                        con.close(); // Close connection
+	                    }
+	                } catch (Exception e) {
+	                    e.printStackTrace();
+	                }
+	            }
+
+	            return paymentList; // Return the list of payment details
 	        }
 
 }
