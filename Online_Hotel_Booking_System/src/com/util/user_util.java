@@ -235,5 +235,51 @@ public class user_util {
     	    }
     	    return user; // Return the User object or null if not found
     	}
+       
+       public static boolean updateUser(int userId, String name, String email, String phone, String username, String password, String profile) {
+    	    boolean isSuccess = false;  // Track if the update is successful
+
+    	    try {
+    	        // Establishing a database connection
+    	        con = DBconnect.getConnection();
+    	        
+    	        // Update query to modify the user data in the 'user' table
+    	        String updateUserSql = "UPDATE user SET name = ?, email = ?, phone = ?, username = ?, password = ?, profile = ? WHERE id = ?";
+    	        
+    	        // Using PreparedStatement to avoid SQL injection
+    	        pstmt = con.prepareStatement(updateUserSql);
+    	        pstmt.setString(1, name);
+    	        pstmt.setString(2, email);
+    	        pstmt.setString(3, phone);
+    	        pstmt.setString(4, username);
+    	        pstmt.setString(5, password);
+    	        pstmt.setString(6, profile);  // Updating the profile image path
+    	        pstmt.setInt(7, userId);  // Update based on userId
+    	        
+    	        // Execute the update query
+    	        int rowsAffected = pstmt.executeUpdate();
+    	        
+    	        // If at least one row was affected, the update was successful
+    	        if (rowsAffected > 0) {
+    	            isSuccess = true;
+    	        } else {
+    	            isSuccess = false;
+    	        }
+    	        
+    	    } catch (Exception e) {
+    	        e.printStackTrace();
+    	    } finally {
+    	        try {
+    	            // Close resources
+    	            if (pstmt != null) pstmt.close();
+    	            if (con != null) con.close();
+    	        } catch (Exception e) {
+    	            e.printStackTrace();
+    	        }
+    	    }
+    	    
+    	    return isSuccess;  // Return whether the update was successful
+    	}
+
 
 }

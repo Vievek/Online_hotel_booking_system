@@ -34,6 +34,8 @@
  <img src="${user.profile}" alt="user img"/>
  <h1>${user.email}</h1>
   <h1>${user.phone}</h1>
+  
+  <a href="${pageContext.request.contextPath}/ShowEditUser?uId=${ru_id}"> edit profile</a>
     
     <h2>Bookings</h2>
     <c:if test="${not empty bookingsWithPayments}">

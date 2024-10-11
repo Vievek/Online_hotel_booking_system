@@ -17,6 +17,7 @@
     	<p>Your user ID is: <%= userId %></p>
 		<a href="${pageContext.request.contextPath}/favouriteRooms?uid=<%= userId %>">Favourite</a> 
 		 <a href="${pageContext.request.contextPath}/logout">Logout</a>
+		 <a href="${pageContext.request.contextPath}/ReadUserProfile?userId=${ru_id}" >user profile</a>
 		   <% }
 	else { %>
     	<h1>Welcome, Guest!</h1>
