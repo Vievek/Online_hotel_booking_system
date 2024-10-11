@@ -36,6 +36,7 @@
   <h1>${user.phone}</h1>
   
   <a href="${pageContext.request.contextPath}/ShowEditUser?uId=${ru_id}"> edit profile</a>
+  <a href="${pageContext.request.contextPath}/DeleteAccount?uId=${ru_id}"> delete account</a>
     
     <h2>Bookings</h2>
     <c:if test="${not empty bookingsWithPayments}">

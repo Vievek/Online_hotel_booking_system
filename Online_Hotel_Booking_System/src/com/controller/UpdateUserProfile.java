@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -33,6 +34,9 @@ public class UpdateUserProfile extends HttpServlet {
         String useridStr = request.getParameter("uid");
         System.out.println(useridStr);
         int userid = Integer.parseInt(useridStr);
+        
+        String ruseridStr = request.getParameter("ruid");
+        
 
         // Handle file upload
         Part filePart = request.getPart("image"); // Retrieves the image file part
@@ -62,9 +66,15 @@ public class UpdateUserProfile extends HttpServlet {
         boolean updated = user_util.updateUser(userid, name, email, phone, username, password, imagePath);
 
         if (updated) {
+            request.setAttribute("UuserId", ruseridStr);
             System.out.println("User profile updated successfully.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("views/home.jsp");
+            dispatcher.forward(request, response);
         } else {
             System.out.println("Failed to update user profile.");
+            request.setAttribute("errorMessage", "Failed to update user profile");
+			RequestDispatcher dis = request.getRequestDispatcher("views/errorPage.jsp");
+			dis.forward(request, response);
         }
     }
 }

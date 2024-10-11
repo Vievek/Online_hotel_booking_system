@@ -280,6 +280,67 @@ public class user_util {
     	    
     	    return isSuccess;  // Return whether the update was successful
     	}
+       
+       public static boolean deleteUserByRuId(int ruId) {
+    	    boolean isSuccess = false;  // Track if the deletion is successful
+    	    Connection con = null;
+    	    PreparedStatement pstmt = null;
+    	    ResultSet rs = null;
 
+    	    try {
+    	        // Step 1: Establish a database connection
+    	        con = DBconnect.getConnection();
+
+    	        // Step 2: Retrieve the 'id' (user.id) from the 'registered_user' table before deletion
+    	        String getUserIdSql = "SELECT id FROM registered_user WHERE ru_id = ?";
+    	        pstmt = con.prepareStatement(getUserIdSql);
+    	        pstmt.setInt(1, ruId);
+    	        rs = pstmt.executeQuery();
+
+    	        int userId = -1;
+    	        if (rs.next()) {
+    	            userId = rs.getInt("id");  // Fetch the user ID from registered_user
+    	        }
+
+    	        // If no matching user is found, return false
+    	        if (userId == -1) {
+    	            return isSuccess;  // No user found, return false
+    	        }
+
+    	        // Step 3: Delete from 'registered_user'
+    	        String deleteRegisteredUserSql = "DELETE FROM registered_user WHERE ru_id = ?";
+    	        pstmt = con.prepareStatement(deleteRegisteredUserSql);
+    	        pstmt.setInt(1, ruId);
+    	        int rowsAffectedRegisteredUser = pstmt.executeUpdate();
+
+    	        // If the deletion from registered_user is successful, proceed to delete from 'user'
+    	        if (rowsAffectedRegisteredUser > 0) {
+    	            // Step 4: Delete the corresponding record in 'user' using the retrieved userId
+    	            String deleteUserSql = "DELETE FROM user WHERE id = ?";
+    	            pstmt = con.prepareStatement(deleteUserSql);
+    	            pstmt.setInt(1, userId);
+    	            int rowsAffectedUser = pstmt.executeUpdate();
+
+    	            // If the user deletion was successful, mark the process as successful
+    	            if (rowsAffectedUser > 0) {
+    	                isSuccess = true;
+    	            }
+    	        }
+
+    	    } catch (Exception e) {
+    	        e.printStackTrace();  // Log any exceptions for debugging
+    	    } finally {
+    	        // Step 5: Close resources
+    	        try {
+    	            if (rs != null) rs.close();
+    	            if (pstmt != null) pstmt.close();
+    	            if (con != null) con.close();
+    	        } catch (Exception e) {
+    	            e.printStackTrace();  // Handle any resource-closing exceptions
+    	        }
+    	    }
+
+    	    return isSuccess;  // Return whether the deletion was successful
+    	}
 
 }

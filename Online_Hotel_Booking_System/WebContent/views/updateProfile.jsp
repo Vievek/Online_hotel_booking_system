@@ -47,6 +47,7 @@
     <img src="${user.profile}" alt="Current Profile Image">
     
 	<input type="hidden" name="uid" value="${user.id}"> <!-- Store room ID in hidden input -->	
+	<input type="hidden" name="ruid" value="${ru_id}">
 
     <!-- Image Upload -->
     <label for="image">Upload New Profile Image:</label>

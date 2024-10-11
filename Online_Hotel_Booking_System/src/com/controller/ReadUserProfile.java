@@ -38,6 +38,13 @@ public class ReadUserProfile extends HttpServlet {
             request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
             return; // Exit method after forwarding
         }
+		Object userIdAttr = request.getAttribute("UuserId");
+
+		if (userIdAttr instanceof Integer) {
+			userId = (Integer) userIdAttr; // Safely cast if it's an Integer
+		}
+		
+		System.out.println(userId);
 
         ProfileUser user = user_util.getUserDetailsByRuId(userId);
         System.out.println("User name: " + (user != null ? user.getName() : "User not found"));
