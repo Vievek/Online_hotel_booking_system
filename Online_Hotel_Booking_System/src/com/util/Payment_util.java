@@ -66,6 +66,52 @@ public class Payment_util {
 	        return paymentDetails; // Return the payment details or null if not found
 	    }
 	
+	        // Method to insert payment details into the table using individual arguments
+	        public static boolean insertPayment(double amount, double remainingAmount,String payment_date, int bId) {
+	         
 
+	            try {
+	                // Get a connection from the database (assuming DBconnect is your connection class)
+	                con = DBconnect.getConnection();
+
+	                // SQL query to insert a new payment entry
+	                String sql = "INSERT INTO payment (amount, payment_type, remaining_amount,payment_date, b_id) VALUES (?, ?, ?, ?,?)";
+	                
+	                String amountStr = Double.toString(amount);
+	                String remainingAmountStr = Double.toString(remainingAmount);
+	                
+	                // Use PreparedStatement to prevent SQL injection
+	                try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+	                    // Set the values for each column
+	                	 pstmt.setString(1, amountStr);               // Set amount as String
+	                     pstmt.setString(2, "online");                // Set payment_type as "online"
+	                     pstmt.setString(3, remainingAmountStr);      // Set remaining_amount as String
+	                     pstmt.setString(4, payment_date);            // Set payment_date
+	                     pstmt.setInt(5, bId);                        // Set b_id
+                 
+
+	                    // Execute the insert query
+	                    int rowsInserted = pstmt.executeUpdate();
+
+	                    // Check if the insertion was successful
+	                    if (rowsInserted > 0) {
+	                        isSuccess = true;
+	                        System.out.println("Payment inserted successfully.");
+	                    }
+	                }
+	            } catch (Exception e) {
+	                e.printStackTrace(); // Handle exceptions by printing the stack trace
+	            } finally {
+	                try {
+	                    if (con != null) {
+	                        con.close(); // Close connection
+	                    }
+	                } catch (Exception e) {
+	                    e.printStackTrace();
+	                }
+	            }
+
+	            return isSuccess; // Return whether the insertion was successful
+	        }
 
 }

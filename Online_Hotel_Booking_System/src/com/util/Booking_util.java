@@ -112,6 +112,35 @@ public class Booking_util {
 	        return bookingDetails; // Return the booking details or null if not found
 	    }
 
+	    public static boolean updateBookingSts(String status, int bid) {
+	        boolean isUpdated = false;
+
+	        try {
+	            // Get a connection from the database
+	            con = DBconnect.getConnection();
+
+	            // SQL query to update the booking status for a specific bid
+	            String sql = "UPDATE booking SET payment_status = ? WHERE b_id = ?";
+
+	            // Use PreparedStatement to prevent SQL injection
+	            try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+	                pstmt.setString(1, status);  // Set the payment_status parameter
+	                pstmt.setInt(2, bid);        // Set the b_id parameter
+
+	                // Execute the update
+	                int rowsAffected = pstmt.executeUpdate();
+	                
+	                // If one or more rows are affected, the update was successful
+	                if (rowsAffected > 0) {
+	                    isUpdated = true;
+	                }
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace(); // Handle exceptions by printing the stack trace
+	        }
+
+	        return isUpdated; // Return true if the update was successful, otherwise false
+	    }
 	    
 	   
 	}

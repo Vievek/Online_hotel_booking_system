@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.util.Booking_util;
+import com.util.Payment_util;
+
 @WebServlet("/AddPayment")
 public class AddPayment extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -57,6 +60,44 @@ public class AddPayment extends HttpServlet {
 		String formattedDate = formatter.format(currentDate);  // Convert date to string
 		
 		System.out.println("formattedDate  "+ formattedDate);
+		
+		
+        boolean isInserted = Payment_util.insertPayment(payedAmountDouble, remainingDouble, formattedDate, bidInt);
+        
+        if(isInserted) {
+        	if(remainingDouble>0) {
+        		boolean isUpdated = Booking_util.updateBookingSts("Advance Paid",bidInt);
+        		if(isUpdated) {
+        			System.out.println("Booking status advance updated successfully");
+        			request.setAttribute("amount", payedAmountDouble);
+                    request.getRequestDispatcher("views/paymentSuccess.jsp").forward(request, response);
+        		}else {
+        			System.out.println("Booking status  not updated successfully");
+        			request.setAttribute("errorMessage", "Payment not successful");
+                    request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
+        		}
+        		
+        	}else if(remainingDouble==0){
+        		boolean isUpdated = Booking_util.updateBookingSts("Payment Completed",bidInt);
+        		if(isUpdated) {
+        			System.out.println("Booking status total updated successfully");
+        			request.setAttribute("amount", payedAmountDouble);
+                    request.getRequestDispatcher("views/paymentSuccess.jsp").forward(request, response);
+        		}else {
+        			System.out.println("Booking status  not updated successfully");
+        			request.setAttribute("errorMessage", "Payment not successful");
+                    request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
+        		}
+        		
+        	
+        	}
+        }else {
+        	request.setAttribute("errorMessage", "Payment not successful");
+            request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
+        }
+
 	}
+	
+	
 
 }
