@@ -75,6 +75,7 @@
     
             <a href="${pageContext.request.contextPath}/DeleteBooking?bId=${booking.id}" >Cancel order</a>
             <a href="${pageContext.request.contextPath}/UpdateBookingRead?bId=${booking.id}" >Edit booking</a>
+            <a href="${pageContext.request.contextPath}/PaymentRead?bId=${booking.id}" >Confirm order</a>
                 
 </c:if>
 

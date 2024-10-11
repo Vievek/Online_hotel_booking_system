@@ -32,6 +32,10 @@ public class UpdateBookingRead extends HttpServlet {
         if (booking != null) {
         	System.out.println("Booking found: " + booking);
         	
+        	 boolean delete = BookingServices_util.deleteBookingServices(bid);
+        	 
+        	 System.out.println(delete);
+        	
         	int roomId = booking.getR_id(); // Should give you the room ID
             int userId = booking.getRu_id(); // Should give you the user ID
 
