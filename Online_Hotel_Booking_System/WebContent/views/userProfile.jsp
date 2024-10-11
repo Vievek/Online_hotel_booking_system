@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <!-- Importing JSTL functions -->
+
     
 <%@ page import="java.util.List" %>
 <%@ page import="com.model.BookingWithPayments" %>
@@ -29,6 +31,9 @@
     }
 %>
  <h1>User Profile for ${user.name}</h1>
+ <img src="${user.profile}" alt="user img"/>
+ <h1>${user.email}</h1>
+  <h1>${user.phone}</h1>
     
     <h2>Bookings</h2>
     <c:if test="${not empty bookingsWithPayments}">
@@ -55,6 +60,10 @@
 			<c:if test="${empty bookingWithPayments.payments}">
 			    <p>No payments found for this booking.</p>
 			</c:if>
+			<c:if test="${payment.remainingAmount != '0'}">
+			    <a href="${pageContext.request.contextPath}/PaymentRead?bId=${bookingWithPayments.booking.id}">Pay Remaining Amount</a>
+			</c:if>
+
         </c:forEach>
     </c:if>
     
