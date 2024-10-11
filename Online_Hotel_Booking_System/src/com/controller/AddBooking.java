@@ -3,6 +3,9 @@ package com.controller;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -153,15 +156,16 @@ public class AddBooking extends HttpServlet {
         }
     }
 
-    private String formatDate(String dateStr) {
-        SimpleDateFormat inputFormat = new SimpleDateFormat("MMM dd, yyyy"); // Input date format (e.g., "Jun 10, 2024")
-        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");  // MySQL date format
+    public String formatDate(String dateStr) {
+        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("MMM dd, yyyy");
+        DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
         try {
-            Date date = inputFormat.parse(dateStr);
-            return outputFormat.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null; // Handle this case as needed
+            LocalDate date = LocalDate.parse(dateStr, inputFormat);
+            return date.format(outputFormat);
+        } catch (DateTimeParseException e) {
+            e.printStackTrace(); // You can log the error or handle it as needed
+            return null;
         }
     }
 

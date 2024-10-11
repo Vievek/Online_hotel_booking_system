@@ -39,10 +39,10 @@ public class PaymentRead extends HttpServlet {
                 double remainingAmountDouble = Double.parseDouble(remaining_amount);
                 System.out.println("remainingAmountDouble  "+ remainingAmountDouble);
                 
-                request.setAttribute("remaining amount",remainingAmountDouble );
+                request.setAttribute("remainingamount",remainingAmountDouble );
 
             } else {
-            	request.setAttribute("remaining amount", totalAmountDouble );
+            	request.setAttribute("remainingamount", totalAmountDouble );
             }
 
 

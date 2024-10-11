@@ -27,13 +27,13 @@
         </tr>
        <tr>
             <th>Remaining Amount</th>
-            <td>${remaining amount}</td>
+            <td>${remainingamount}</td>
         </tr>
       
 </table>
 <div class="payment-form">
     <h2>Payment Form</h2>
-    <form action="/process_payment" method="POST">
+    <form action="${pageContext.request.contextPath}/AddPayment" method="POST">
         <!-- Cardholder's Name -->
         <label for="cardholder-name">Cardholder's Name:</label>
         <input type="text" id="cardholder-name" name="cardholder_name" required>
@@ -54,7 +54,7 @@
         <label for="amount">Amount:</label>
         <input type="number" id="amount" name="amount" required min="1" step="0.01" placeholder="0.00">
         
-        <input type="hidden" name="Remaining" value="${remaining amount}">
+        <input type="hidden" name="Remaining" value="${remainingamount}">
         <input type="hidden" name="total" value="${booking.total_amount}">
         <input type="hidden" name="bid" value="${booking.id}">
         
@@ -62,12 +62,6 @@
         <button type="submit">Pay</button>
     </form>
 </div>
-
-
-    
-            <a href="${pageContext.request.contextPath}/DeleteBooking?bId=${booking.id}" >Cancel order</a>
-            <a href="${pageContext.request.contextPath}/UpdateBookingRead?bId=${booking.id}" >Edit booking</a>
-            <a href="${pageContext.request.contextPath}/PaymentRead?bId=${booking.id}" >Confirm order</a>
                 
 	</c:if>
 </body>
