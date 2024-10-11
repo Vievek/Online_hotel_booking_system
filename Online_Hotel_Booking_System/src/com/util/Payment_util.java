@@ -26,8 +26,9 @@ public class Payment_util {
 
 	            // SQL query to select payment details for a specific bId
 	            String sql = "SELECT p_id, amount, payment_type, remaining_amount, b_id " +
-	                         "FROM payment WHERE b_id = ?";
-
+	                         "FROM payment WHERE b_id = ?" +
+	                         "ORDER BY p_id DESC LIMIT 1"; 
+	            
 	            // Use PreparedStatement to prevent SQL injection
 	            try (PreparedStatement pstmt = con.prepareStatement(sql)) {
 	                pstmt.setInt(1, bId);  // Set the bId parameter

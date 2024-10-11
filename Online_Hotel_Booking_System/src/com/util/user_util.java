@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.model.ProfileUser;
 import com.model.registered_user;
 
 public class user_util {
@@ -193,5 +194,46 @@ public class user_util {
     	    return mId; // Return the retrieved m_id or -1 if not found
     	}
 
-       
+       public static ProfileUser getUserDetailsByRuId(int ruId) {
+    	   ProfileUser user = null; // Object to store user details
+    	    
+    	    try {
+    	        con = DBconnect.getConnection(); // Obtain database connection
+    	        String sql = "SELECT u.id, u.name, u.email, u.phone, u.username, u.password, u.role, u.profile " +
+    	                     "FROM user u " +
+    	                     "JOIN registered_user ru ON u.id = ru.id " +
+    	                     "WHERE ru.ru_id = ?"; // SQL query to join user and registered_user
+
+    	        pstmt = con.prepareStatement(sql); // Prepare the SQL statement
+    	        pstmt.setInt(1, ruId); // Set the ru_id parameter
+    	        rs = pstmt.executeQuery(); // Execute the query
+
+    	        // Check if a result was returned
+    	        if (rs.next()) {
+    	            // Create a new User object and populate it with the retrieved data
+    	            user = new ProfileUser();
+    	            user.setId(rs.getInt("id"));
+    	            user.setName(rs.getString("name"));
+    	            user.setEmail(rs.getString("email"));
+    	            user.setPhone(rs.getString("phone"));
+    	            user.setUsername(rs.getString("username"));
+    	            user.setPassword(rs.getString("password"));
+    	            user.setRole(rs.getString("role"));
+    	            user.setProfile(rs.getString("profile"));
+    	        }
+    	    } catch (Exception e) {
+    	        e.printStackTrace(); // Print stack trace for debugging
+    	    } finally {
+    	        // Close resources in reverse order of creation
+    	        try {
+    	            if (rs != null) rs.close();
+    	            if (pstmt != null) pstmt.close();
+    	            if (con != null) con.close();
+    	        } catch (SQLException e) {
+    	            e.printStackTrace(); // Handle potential SQL exceptions during closing
+    	        }
+    	    }
+    	    return user; // Return the User object or null if not found
+    	}
+
 }
