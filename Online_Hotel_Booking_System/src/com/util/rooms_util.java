@@ -233,11 +233,11 @@ public static List<rooms> gethighlyBookedrooms(){
 	try {			
 		con = DBconnect.getConnection();
 		stmt = con.createStatement();
-		String sql = "SELECT r.*" + 
-				"FROM rooms r r" + 
-				"LEFT JOIN booking b ON r.r_id = b.r_id" + 
-				"GROUP BY r.r_id" + 
-				"ORDER BY COUNT(b.r_id) DESC;" ;
+		String sql = "SELECT r.*, COUNT(b.r_id) AS booking_count " +
+                "FROM rooms r " +
+                "LEFT JOIN booking b ON r.r_id = b.r_id " +
+                "GROUP BY r.r_id " +
+                "ORDER BY COUNT(b.r_id) DESC;";
 		rs=stmt.executeQuery(sql);
 		
 		
@@ -281,11 +281,12 @@ public static List<rooms> RecentlySelectedRooms(int userId) {
     try {
         con = DBconnect.getConnection();
         String sql = "SELECT r.* " +
-                     "FROM rooms r " +
-                     "JOIN user_room_interactions uri ON r.r_id = uri.r_id " +
-                     "JOIN registered_user ru ON ru.ru_id = uri.ru_id " +
-                     "WHERE ru.ru_id = ? " +
-                     "ORDER BY uri.interaction_id DESC;";
+                "FROM rooms r " +
+                "JOIN user_room_interactions uri ON r.r_id = uri.room_id " +
+                "JOIN registered_user ru ON ru.ru_id = uri.user_id " +
+                "WHERE ru.ru_id = ? " +
+                "ORDER BY uri.interaction_id DESC;";
+
 
         pstmt = con.prepareStatement(sql);
         pstmt.setInt(1, userId);  // Setting the user ID in the prepared statement

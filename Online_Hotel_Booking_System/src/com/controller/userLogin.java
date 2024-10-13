@@ -55,7 +55,7 @@ public class userLogin extends HttpServlet {
                         System.out.println(ruId);
                         session.setAttribute("ru_id", ruId);
 	                    // Navigate to home page for regular users
-	                    request.getRequestDispatcher("views/home.jsp").forward(request, response);
+	                    request.getRequestDispatcher("/").forward(request, response);
 	                    break;
 
 	                case "Worker":

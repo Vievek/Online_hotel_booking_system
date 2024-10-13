@@ -21,6 +21,6 @@ public class LogoutServlet extends HttpServlet {
         }
 
         // Redirect to the login page or home page
-        response.sendRedirect("views/home.jsp");
+        response.sendRedirect("/Online_Hotel_Booking_System/");
     }
 }
