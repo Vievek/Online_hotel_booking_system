@@ -3,6 +3,7 @@ package com.util;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +13,8 @@ import com.model.Booking;
 public class Booking_util {
 
 		private static Connection con=null;
-		private static Statement stmt =null;
 		private static ResultSet rs = null;
-		private static boolean isSuccess = false;
-		
-
-	    public static int insertBooking(String room_price, String service_price, String total_amount, String checkin,
+		public static int insertBooking(String room_price, String service_price, String total_amount, String checkin,
 	                                     String checkout, int ru_id, int r_id) {
 	        int lastInsertedId = -1;
 	        System.out.println("Inserting booking for ru_id: " + ru_id);
@@ -25,7 +22,7 @@ public class Booking_util {
 	        
 	        try {
 	            con = DBconnect.getConnection();
-	            stmt = con.createStatement();
+	            con.createStatement();
 
 	            // Use PreparedStatement to avoid SQL injection
 	            String sql = "INSERT INTO booking (room_price, service_price, total_amount, check_in, check_out, payment_status, ru_id, r_id) " +
@@ -56,15 +53,13 @@ public class Booking_util {
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        } finally {
-	            // Close the resources if necessary
 	            try {
-	                if (stmt != null) stmt.close();
+	                if (rs != null) rs.close();
 	                if (con != null) con.close();
-	            } catch (Exception e) {
+	            } catch (SQLException e) {
 	                e.printStackTrace();
 	            }
 	        }
-
 	        return lastInsertedId; // Return the last inserted ID or -1 if failed
 	    }
 	    
@@ -109,7 +104,15 @@ public class Booking_util {
 	            }
 	        } catch (Exception e) {
 	            e.printStackTrace(); // Handle exceptions by printing the stack trace
+	        }finally {
+	            try {
+	                if (rs != null) rs.close();
+	                if (con != null) con.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
 	        }
+
 
 	        return bookingDetails; // Return the booking details or null if not found
 	    }
@@ -139,7 +142,15 @@ public class Booking_util {
 	            }
 	        } catch (Exception e) {
 	            e.printStackTrace(); // Handle exceptions by printing the stack trace
+	        }finally {
+	            try {
+	                if (rs != null) rs.close();
+	                if (con != null) con.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
 	        }
+
 
 	        return isUpdated; // Return true if the update was successful, otherwise false
 	    }
@@ -186,7 +197,15 @@ public class Booking_util {
 	            }
 	        } catch (Exception e) {
 	            e.printStackTrace(); // Handle exceptions by printing the stack trace
+	        }finally {
+	            try {
+	                if (rs != null) rs.close();
+	                if (con != null) con.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
 	        }
+
 
 	        return bookingList; // Return the list of Booking objects (can be empty if no bookings found)
 	    }

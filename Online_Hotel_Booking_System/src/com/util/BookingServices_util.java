@@ -13,7 +13,6 @@ import com.model.BookingServices;
 public class BookingServices_util {
 
     private static Connection con = null;
-    private static Statement stmt = null;
     private static ResultSet rs = null;
     private static PreparedStatement pstmt = null;
     private static boolean isSuccess = false;

@@ -2,6 +2,7 @@ package com.util;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class rooms_util {
 	ArrayList<rooms> rooms = new ArrayList<>();
 	
 	try {			
-		con = DBconnect.getConnection()		;
+		con = DBconnect.getConnection();
 		stmt = con.createStatement();
 		String sql = "select * from rooms" ;
 		rs=stmt.executeQuery(sql);
@@ -43,7 +44,14 @@ public class rooms_util {
 	}
 	catch(Exception e) {
 		e.printStackTrace();
-	}
+	}finally {
+        try {
+            if (rs != null) rs.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 	
 	return rooms;
 	}
@@ -77,7 +85,15 @@ public class rooms_util {
 		}
 		catch(Exception e) {
 			e.printStackTrace();
-		}
+		}finally {
+            try {
+                if (rs != null) rs.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
 		
 		return frooms;
 		}
@@ -111,7 +127,15 @@ public static List<rooms> getFilteredroom2(String roomType){
 	}
 	catch(Exception e) {
 		e.printStackTrace();
-	}
+	}finally {
+        try {
+            if (rs != null) rs.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 	
 	return frooms;
 	}
@@ -145,7 +169,14 @@ public static List<rooms> getFilteredroom3(String acType){
 	}
 	catch(Exception e) {
 		e.printStackTrace();
-	}
+	}finally {
+        try {
+            if (rs != null) rs.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 	
 	return frooms;
 	}
@@ -181,7 +212,15 @@ public static List<rooms> getSelectedRoom(int r_id){
 	}
 	catch(Exception e) {
 		e.printStackTrace();
-	}
+	}finally {
+        try {
+            if (rs != null) rs.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 	
 	return rooms;
 	}

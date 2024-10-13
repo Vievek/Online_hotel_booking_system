@@ -2,6 +2,7 @@ package com.util;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,14 @@ public class Services_util {
 	}
 	catch(Exception e) {
 		e.printStackTrace();
-	}
+	}finally {
+        try {
+            if (rs != null) rs.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 	
 	return services;
 	}

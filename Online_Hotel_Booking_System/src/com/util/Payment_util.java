@@ -3,6 +3,7 @@ package com.util;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,10 +59,9 @@ public class Payment_util {
 	            e.printStackTrace(); // Handle exceptions by printing the stack trace
 	        } finally {
 	            try {
-	                if (con != null) {
-	                    con.close(); // Close connection
-	                }
-	            } catch (Exception e) {
+	                if (rs != null) rs.close();
+	                if (con != null) con.close();
+	            } catch (SQLException e) {
 	                e.printStackTrace();
 	            }
 	        }
@@ -106,14 +106,12 @@ public class Payment_util {
 	                e.printStackTrace(); // Handle exceptions by printing the stack trace
 	            } finally {
 	                try {
-	                    if (con != null) {
-	                        con.close(); // Close connection
-	                    }
-	                } catch (Exception e) {
+	                    if (rs != null) rs.close();
+	                    if (con != null) con.close();
+	                } catch (SQLException e) {
 	                    e.printStackTrace();
 	                }
 	            }
-
 	            return isSuccess; // Return whether the insertion was successful
 	        }
 	        
@@ -152,12 +150,11 @@ public class Payment_util {
 	                }
 	            } catch (Exception e) {
 	                e.printStackTrace(); // Handle exceptions by printing the stack trace
-	            } finally {
+	            }finally {
 	                try {
-	                    if (con != null) {
-	                        con.close(); // Close connection
-	                    }
-	                } catch (Exception e) {
+	                    if (rs != null) rs.close();
+	                    if (con != null) con.close();
+	                } catch (SQLException e) {
 	                    e.printStackTrace();
 	                }
 	            }

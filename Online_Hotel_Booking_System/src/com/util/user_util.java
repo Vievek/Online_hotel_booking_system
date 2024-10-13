@@ -338,6 +338,15 @@ public class user_util {
     	        } catch (Exception e) {
     	            e.printStackTrace();  // Handle any resource-closing exceptions
     	        }
+    	        finally {
+    	            try {
+    	                if (rs != null) rs.close();
+    	                if (pstmt != null) pstmt.close();
+    	                if (con != null) con.close();
+    	            } catch (SQLException e) {
+    	                e.printStackTrace();
+    	            }
+    	        }
     	    }
 
     	    return isSuccess;  // Return whether the deletion was successful
