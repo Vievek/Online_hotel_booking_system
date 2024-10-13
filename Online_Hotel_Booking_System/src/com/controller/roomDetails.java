@@ -13,6 +13,7 @@ import com.model.Services;
 import com.model.rooms;
 import com.util.Services_util;
 import com.util.rooms_util;
+import com.util.userRoom_interaction_util;
 
 /**
  * Servlet implementation class roomDetails
@@ -58,6 +59,11 @@ public class roomDetails extends HttpServlet {
 
 		// Log roomId and userId after checking the attributes
 		System.out.println("Final roomId: " + IroomId + ", userId: " + IuserId);
+		
+		boolean isTrue = userRoom_interaction_util.addUserInteraction(IuserId, IroomId);
+		if(isTrue) {
+			System.out.println("interaction added successfully");
+		}
 
 		// Fetch selected room details
 		List<rooms> room = rooms_util.getSelectedRoom(IroomId);

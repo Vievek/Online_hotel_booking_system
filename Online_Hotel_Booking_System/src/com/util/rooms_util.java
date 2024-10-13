@@ -1,6 +1,7 @@
 package com.util;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -224,4 +225,101 @@ public static List<rooms> getSelectedRoom(int r_id){
 	
 	return rooms;
 	}
+
+public static List<rooms> gethighlyBookedrooms(){
+	
+	ArrayList<rooms> rooms = new ArrayList<>();
+	
+	try {			
+		con = DBconnect.getConnection();
+		stmt = con.createStatement();
+		String sql = "SELECT r.*" + 
+				"FROM rooms r r" + 
+				"LEFT JOIN booking b ON r.r_id = b.r_id" + 
+				"GROUP BY r.r_id" + 
+				"ORDER BY COUNT(b.r_id) DESC;" ;
+		rs=stmt.executeQuery(sql);
+		
+		
+		while(rs.next()) {
+			rooms room = new rooms(
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getInt(4),
+                    rs.getDouble(5),
+                    rs.getString(6),
+                    rs.getString(7),
+                    rs.getString(8),
+                    rs.getString(9),
+                    rs.getString(10),
+                    rs.getString(11)
+            );
+            rooms.add(room);
+		}
+	}
+	catch(Exception e) {
+		e.printStackTrace();
+	}finally {
+        try {
+            if (rs != null) rs.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+	
+	return rooms;
+	}
+
+public static List<rooms> RecentlySelectedRooms(int userId) {
+    ArrayList<rooms> rooms = new ArrayList<>();
+    
+    PreparedStatement pstmt = null;
+    
+
+    try {
+        con = DBconnect.getConnection();
+        String sql = "SELECT r.* " +
+                     "FROM rooms r " +
+                     "JOIN user_room_interactions uri ON r.r_id = uri.r_id " +
+                     "JOIN registered_user ru ON ru.ru_id = uri.ru_id " +
+                     "WHERE ru.ru_id = ? " +
+                     "ORDER BY uri.interaction_id DESC;";
+
+        pstmt = con.prepareStatement(sql);
+        pstmt.setInt(1, userId);  // Setting the user ID in the prepared statement
+        rs = pstmt.executeQuery();
+
+        while (rs.next()) {
+        	rooms room = new rooms(
+                rs.getInt(1),      // Assuming room ID
+                rs.getString(2),   // Assuming room name or other fields
+                rs.getString(3),
+                rs.getInt(4),
+                rs.getDouble(5),
+                rs.getString(6),
+                rs.getString(7),
+                rs.getString(8),
+                rs.getString(9),
+                rs.getString(10),
+                rs.getString(11)
+            );
+            rooms.add(room);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (pstmt != null) pstmt.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    return rooms;
+}
+
 }

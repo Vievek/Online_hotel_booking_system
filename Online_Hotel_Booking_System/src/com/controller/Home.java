@@ -19,6 +19,9 @@ public class Home extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<rooms> room = rooms_util.getAllrooms();
+		List<rooms> highroom = rooms_util.gethighlyBookedrooms();
+		List<rooms> highroom = rooms_util.RecentlySelectedRooms();
+
 	        
 	        // Debug: Log room data to the server console
 	        if (room == null || room.isEmpty()) {
@@ -31,6 +34,8 @@ public class Home extends HttpServlet {
 	                System.out.println("Room ID: " + rom.getRoomId());
 	            }
 	            request.setAttribute("room", room);
+	    		request.setAttribute("highroom",highroom);
+
 	            System.out.println("passing to home");
 	            request.getRequestDispatcher("views/home.jsp").forward(request, response);
 	        }
