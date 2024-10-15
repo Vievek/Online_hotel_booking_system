@@ -33,8 +33,8 @@ public class userLogin extends HttpServlet {
 	            registered_user user = userDetails.get(0); // Get the first user detail
 
 	            // Print user details for debugging
-	            System.out.println("registered_user ID: " + user.getId());
-	            System.out.println("registered_user Name: " + user.getUsername());
+	            System.out.println("user ID: " + user.getId());
+	            System.out.println("user Name: " + user.getUsername());
 
 	            // Invalidate any existing session
 	            request.getSession().invalidate();
