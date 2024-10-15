@@ -41,7 +41,7 @@ public class WCreateChat extends HttpServlet {
 	            request.setAttribute("chatId", chatId);
 
 	            // Forward the request to the next servlet/page (e.g., ChatDetailsServlet)
-	            request.getRequestDispatcher("/GetChatMessage").forward(request, response);
+	            request.getRequestDispatcher("/getChatList").forward(request, response);
 	            
 	        } else {
 	            // If chat was not inserted, pass an error message

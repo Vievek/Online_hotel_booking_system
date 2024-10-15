@@ -35,6 +35,7 @@ public class getChatList extends HttpServlet {
 	        List<Chat> chats = Chat_util.getChatsByWorkerId(userId);
 	        request.setAttribute("chats", chats);            
             request.getRequestDispatcher("views/Wchat.jsp").forward(request, response);
+            System.out.println("chat size"+chats.size());
 
 	}
 
