@@ -261,5 +261,45 @@ public class BookingServices_util {
         }
         return services;
     }
+    
+    public static List<BookingServices> getBookingServicesByWorker(int workerId) {
+        List<BookingServices> services = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            con = DBconnect.getConnection();
+            // SQL query to select all booking services for a specific worker ID
+            String sql = "SELECT bs.date, bs.start_time, bs.end_time, bs.services_id " +
+                         "FROM booking_services bs " +
+                         "WHERE bs.w_id = ?"; // Filtering by worker ID
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, workerId); // Set the worker ID parameter
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                BookingServices service = new BookingServices();
+                service.setDate(rs.getString("date"));
+                service.setStartTime(rs.getString("start_time"));
+                service.setEndTime(rs.getString("end_time"));
+                service.setServicesId(rs.getInt("services_id"));
+                services.add(service); // Add service to the list
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null; // or handle error as needed
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pstmt != null) pstmt.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return services; // Return the list of booking services
+    }
+
 
 }

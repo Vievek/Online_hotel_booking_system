@@ -20,8 +20,8 @@
     	    <a href="${pageContext.request.contextPath}/listBookings">Booking</a>
     	    <a href="${pageContext.request.contextPath}/APaymentList">Payment</a> 
     	    <a href="${pageContext.request.contextPath}/AServiceList">service</a>    	    
-    	        	    <a href="${pageContext.request.contextPath}/AgetuserByrole?role=Worker">Workers</a>
-    	        	    <a href="${pageContext.request.contextPath}/AgetuserByrole?role=User">Guests</a>
+       	    <a href="${pageContext.request.contextPath}/AgetuserByrole?role=Worker">Workers</a>
+       	    <a href="${pageContext.request.contextPath}/AgetuserByrole?role=User">Guests</a>
     	    
     	    <a href="${pageContext.request.contextPath}/getAllrooms?page=admin">Rooms</a>
     	    <a href="${pageContext.request.contextPath}/views/ManagerDashboard.jsp">Dashboard</a>

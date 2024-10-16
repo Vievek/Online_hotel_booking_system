@@ -22,7 +22,7 @@ public class AgetuserByrole extends HttpServlet {
 		
         String role = request.getParameter("role");
 
-        List<registered_user> Users = user_util.getUsersByRole("Worker");
+        List<registered_user> Users = user_util.getUsersByRole(role);
         request.setAttribute("Users", Users);
         
         if ("Worker".equalsIgnoreCase(role)) {

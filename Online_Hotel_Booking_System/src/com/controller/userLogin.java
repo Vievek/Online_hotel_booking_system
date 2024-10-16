@@ -62,8 +62,8 @@ public class userLogin extends HttpServlet {
 	                	// Retrieve w_id from worker table
                         int wId = user_util.getWIdByUserId(user.getId());
                         session.setAttribute("w_id", wId);
-	                    // Navigate to worker dashboard
-	                    request.getRequestDispatcher("views/workerDashboard.jsp").forward(request, response);
+	                    
+	                    request.getRequestDispatcher("Wtasks").forward(request, response);
 	                    break;
 
 	                case "Manager":

@@ -104,9 +104,9 @@
             </c:forEach>
         </c:if>
         
-        <c:if test="${empty paymentList}">
+        <c:if test="${empty Users}">
             <tr>
-                <td colspan="7">No payment records found.</td>
+                <td colspan="7">No Users records found.</td>
             </tr>
         </c:if>
     </table>
