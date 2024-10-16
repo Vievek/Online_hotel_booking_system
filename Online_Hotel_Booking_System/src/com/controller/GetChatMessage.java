@@ -50,13 +50,9 @@ public class GetChatMessage extends HttpServlet {
 	    if (IchatId != null) {
 	    	List<Message> messages = Message_util.getAllMessagesByChatId(IchatId);
 	    	request.setAttribute("messages", messages);  
-	    	request.setAttribute("IchatId", IchatId);
-            request.getRequestDispatcher("views/Wchat.jsp").forward(request, response);
-	    } else {
-	        // Handle the case where chatId is missing or invalid
-	        request.setAttribute("errorMessage", "Invalid or missing chatId.");
-	        request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
-	    }
+	    	request.setAttribute("IchatId", IchatId);            
+	    } 
+	    request.getRequestDispatcher("views/Wchat.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

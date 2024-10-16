@@ -41,7 +41,9 @@ public class SendMessage extends HttpServlet {
 	        if (success) {
 	            // If chat was inserted, pass the chatId as an attribute to the next servlet/page
 	            request.setAttribute("chatId", chat_id);
-	            request.getRequestDispatcher("/GetChatMessage").forward(request, response);
+	            request.setAttribute("userId", sender_id);
+	            System.out.println("chatId and userId after send msg "+chat_id+"  "+sender_id );
+	            request.getRequestDispatcher("/getChatList").forward(request, response);
 	            
 	        } else {
 	            // If chat was not inserted, pass an error message

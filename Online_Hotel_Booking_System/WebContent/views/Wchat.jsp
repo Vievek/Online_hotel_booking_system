@@ -71,7 +71,7 @@
     <c:if test="${chat.m_id == 26}">
         <c:set var="m26Found" value="true" /> <!-- Set the flag if found -->
         <div class="chat">
-            <a href=${pageContext.request.contextPath}/GetChatMessage?chatId=${chat.chat_id}>       
+            <a href=${pageContext.request.contextPath}/getChatList?chatId=${chat.chat_id}&userId=${userId}>       
             <p>Manager Name: ${chat.managerName}</p>
             <p>Worker Name: ${chat.workerName}</p>
             </a>
@@ -111,12 +111,14 @@
         </c:forEach>       
     </c:if>
 </div>
- <form action="${pageContext.request.contextPath}/SendMessage" method="post" class="message-form">
-            <input type="hidden" name="chat_id" value="${IchatId}"> <!-- Assuming chat_id is available -->
-            <input type="hidden" name="sender_id" value="${userId}"> <!-- Assuming sender_id is available -->
-            <textarea name="message" placeholder="Type your message here..." required></textarea><br>
-            <button type="submit">Send Message</button>
-        </form>
+ <c:if test="${not empty IchatId}">
+    <form action="${pageContext.request.contextPath}/SendMessage" method="post" class="message-form">
+        <input type="hidden" name="chat_id" value="${IchatId}"> 
+        <input type="hidden" name="sender_id" value="${userId}"> 
+        <textarea name="message" placeholder="Type your message here..." required></textarea><br>
+        <button type="submit">Send Message</button>
+    </form>
+</c:if>
 
  
 

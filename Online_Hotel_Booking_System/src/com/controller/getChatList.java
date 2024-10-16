@@ -19,23 +19,38 @@ public class getChatList extends HttpServlet {
        
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 String userid = request.getParameter("userId");
+		// Try to get userId from the request parameter first
+		String userid = request.getParameter("userId");
 
-	        int userId = 0;
+		// If the parameter is null or empty, try to get it as an attribute
+		if (userid == null || userid.isEmpty()) {
+		    Object userIdAttribute = request.getAttribute("userId");
+		    
+		    // Check if the attribute is not null and is of String or can be cast to String
+		    if (userIdAttribute != null) {
+		        userid = userIdAttribute.toString();
+		    }
+		}
 
-	        try {
-	            userId = Integer.parseInt(userid);
-	            System.out.println(userId);
-	        } catch (NumberFormatException e) {
-	            request.setAttribute("errorMessage", "Invalid User ID ");
-	            request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
-	            return;
-	        }
+		int userId = 0;
+
+		try {
+		    // Convert the string userId to an integer
+		    userId = Integer.parseInt(userid);
+		    System.out.println(userId);
+		} catch (NumberFormatException e) {
+		    // Handle invalid userId format
+		    request.setAttribute("errorMessage", "Invalid User ID ");
+		    request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
+		    return;
+		}
+
 	        
 	        List<Chat> chats = Chat_util.getChatsByWorkerId(userId);
-	        request.setAttribute("chats", chats);            
-            request.getRequestDispatcher("views/Wchat.jsp").forward(request, response);
-            System.out.println("chat size"+chats.size());
+	        request.setAttribute("chats", chats); 
+	        System.out.println("chat size"+chats.size());
+            request.getRequestDispatcher("GetChatMessage").forward(request, response);
+         
 
 	}
 
