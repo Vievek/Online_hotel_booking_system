@@ -74,7 +74,7 @@
 <body>
     <h2>Payment List</h2>
 
-    <a href="<%=request.getContextPath() %>/new" class="add-btn">Add New Payment</a>
+    <a href="${pageContext.request.contextPath}/views/Aroomform.jsp">Add New Payment</a>
 
     <table>
         <tr>
@@ -94,8 +94,8 @@
                 <td>${rom.ac_type}</td>
                 <td>${rom.availabilityStatus}</td>
                 <td class="actions">
-                    <a href="edit?id=<c:out value='${payment.id }'/>" >Edit</a>
-                    <a href="delete?id=<c:out value='${payment.id }'/>" >Delete</a>
+					<a href="${pageContext.request.contextPath}/ShowRoomEdit?roomId=${rom.roomId}">Edit</a>
+                    <a href="delete?id=<c:out value='${rom.roomId }'/>" >Delete</a>
                 </td>
             </tr>
         </c:forEach>

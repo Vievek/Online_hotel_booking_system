@@ -74,13 +74,12 @@
 <body>
     <h2>Payment List</h2>
 
-    <a href="<%=request.getContextPath() %>/new" class="add-btn">Add New Payment</a>
+    <a href="${pageContext.request.contextPath}/views/AaddPayment.jsp" class="add-btn">Add New Payment</a>
 
     <table>
         <tr>
             <th>Payment ID</th>
             <th>Booking ID</th>
-            <th>Payment Type</th>
             <th>Payment Date</th>
             <th>Paid Amount</th>
             <th>Remaining Amount</th>
@@ -91,15 +90,11 @@
                 <tr>
                     <td>${payment.pId}</td>
                     <td>${payment.bId}</td>
-                    <td>${payment.paymentType}</td>
                     <td>${payment.paymentDate}</td>
                     <td>${payment.amount}</td>
                     <td>${payment.remainingAmount}</td>
                   
-                    <td class="actions">
-                        <a href="edit?id=${payment.pId}">Edit</a>
-                        <a href="delete?id=${payment.pId}">Delete</a>
-                    </td>
+                    
                 </tr>
             </c:forEach>
         </c:if>

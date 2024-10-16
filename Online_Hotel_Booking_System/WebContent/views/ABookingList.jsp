@@ -74,7 +74,6 @@
 <body>
     <h2>Payment List</h2>
 
-    <a href="<%=request.getContextPath() %>/new" class="add-btn">Add New Payment</a>
 
     <table>
         <tr>
@@ -99,10 +98,7 @@
                 <td>${booking.service_price}</td>
                 <td>${booking.total_amount}</td>
                 <td>${booking.payment_status}</td>
-                <td class="actions">
-                    <a href="edit?id=<c:out value='${payment.id }'/>" >Edit</a>
-                    <a href="delete?id=<c:out value='${payment.id }'/>" >Delete</a>
-                </td>
+                
             </tr>
         </c:forEach>
     </table>

@@ -323,6 +323,82 @@ public static List<rooms> RecentlySelectedRooms(int userId) {
     return rooms;
 }
 
+public static boolean insertRoom(String roomType, String description, int noOfPerson, double price, 
+        String availabilityStatus, String[] imagePaths) {
+Connection con = null;
+PreparedStatement stmt = null;
+boolean isInserted = false;
 
+String query = "INSERT INTO rooms (room_type, description, no_of_person, price, availability_status, img1, img2, img3, img4) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+try {
+con = DBconnect.getConnection();
+stmt = con.prepareStatement(query);
+stmt.setString(1, roomType);
+stmt.setString(2, description);
+stmt.setInt(3, noOfPerson);
+stmt.setDouble(4, price);
+stmt.setString(5, availabilityStatus);
+stmt.setString(6, imagePaths[0]);
+stmt.setString(7, imagePaths[1]);
+stmt.setString(8, imagePaths[2]);
+stmt.setString(9, imagePaths[3]);
+
+int rowsInserted = stmt.executeUpdate();
+isInserted = rowsInserted > 0;
+} catch (SQLException e) {
+e.printStackTrace();
+} finally {
+// Close resources
+try {
+if (stmt != null) stmt.close();
+if (con != null) con.close();
+} catch (SQLException e) {
+e.printStackTrace();
+}
+}
+
+return isInserted;
+}
+
+// Method to update an existing room in the database
+public static boolean updateRoom(int roomId, String roomType, String description, int noOfPerson, double price, 
+        String availabilityStatus, String[] imagePaths) {
+Connection con = null;
+PreparedStatement stmt = null;
+boolean isUpdated = false;
+
+String query = "UPDATE rooms SET r_type = ?, descriptions = ?, no_of_persons = ?, price = ?, availability_status = ?, img1 = ?, img2 = ?, img3 = ?, img4 = ? WHERE r_id = ?";
+
+try {
+con = DBconnect.getConnection();
+stmt = con.prepareStatement(query);
+stmt.setString(1, roomType);
+stmt.setString(2, description);
+stmt.setInt(3, noOfPerson);
+stmt.setDouble(4, price);
+stmt.setString(5, availabilityStatus);
+stmt.setString(6, imagePaths[0]);
+stmt.setString(7, imagePaths[1]);
+stmt.setString(8, imagePaths[2]);
+stmt.setString(9, imagePaths[3]);
+stmt.setInt(10, roomId); // Setting the room ID for the WHERE clause
+
+int rowsUpdated = stmt.executeUpdate();
+isUpdated = rowsUpdated > 0;
+} catch (SQLException e) {
+e.printStackTrace();
+} finally {
+// Close resources
+try {
+if (stmt != null) stmt.close();
+if (con != null) con.close();
+} catch (SQLException e) {
+e.printStackTrace();
+}
+}
+
+return isUpdated;
+}
 
 }

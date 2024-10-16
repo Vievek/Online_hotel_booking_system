@@ -27,7 +27,7 @@
                     <p>Capacity: ${rom.noOfPerson} Persons</p>
                     <p>Price: $<span id="roomPrice">${rom.price}</span></p> <!-- Display room price here -->
                     <p>AC Type: ${rom.ac_type}</p>
-                    <img src="${rom.img1}" alt="Image of ${rom.roomType} (Room ID: ${rom.roomId})" />
+                    <img src="${pageContext.request.contextPath}/${rom.img1}" alt="Image of ${rom.roomType} (Room ID: ${rom.roomId})" />
                     <hr/>     
 					 <input type="hidden"  name="roomPrice" id="roomPriceHidden" value="${rom.price}"> <!-- Store room price in hidden input -->  
 					 <input type="hidden" name="roomId" value="${rom.roomId}"> <!-- Store room ID in hidden input -->	

@@ -74,7 +74,6 @@
 <body>
     <h2>Payment List</h2>
 
-    <a href="<%=request.getContextPath() %>/new" class="add-btn">Add New Payment</a>
 
     <table>
         <tr>
@@ -96,10 +95,7 @@
                     <td>${guest.email}</td>
                     <td>${guest.phone}</td>
                     
-                    <td class="actions">
-                        <a href="edit?id=${payment.pId}">Edit</a>
-                        <a href="delete?id=${payment.pId}">Delete</a>
-                    </td>
+                  
                 </tr>
             </c:forEach>
         </c:if>

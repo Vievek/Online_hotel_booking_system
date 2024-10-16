@@ -9,9 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.model.Booking;
 import com.model.Payment;
-import com.util.Booking_util;
 import com.util.Payment_util;
 
 @WebServlet("/APaymentList")
@@ -32,6 +30,11 @@ public class APaymentList extends HttpServlet {
 
         // Forward to JSP page for display
         request.getRequestDispatcher("views/APaymentList.jsp").forward(request, response);
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }
