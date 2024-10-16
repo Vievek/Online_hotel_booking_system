@@ -3,7 +3,8 @@
     
     <%
     // Retrieve user ID and username from session
-    Integer userId = (Integer) session.getAttribute("m_id");
+    Integer MuserId = (Integer) session.getAttribute("m_id");
+    Integer userId = (Integer) session.getAttribute("userId");
     String username = (String) session.getAttribute("username");
 %>
     
@@ -18,6 +19,8 @@
 	<h1>Welcome, <%= username %>!</h1>
     	<p>Your user ID is: <%= userId %></p>
     	    <a href="${pageContext.request.contextPath}/logout">Logout</a>
+    	    <a href="${pageContext.request.contextPath}/AgetChatList?userId=${userId}">Chat</a>
+    	    
     	
 </body>
 </html>

@@ -115,5 +115,60 @@ public class Chat_util {
             // Return the last inserted chat_id
             return lastInsertedChatId;
         }
+        
+        public static List<Chat> getChatsByManagerId(int m_id) {
+            List<Chat> chatList = new ArrayList<>();
+
+            try {
+                // Get a connection from the database
+                con = DBconnect.getConnection();
+
+                // SQL query to select chats and join with user table to get names of manager and worker
+                String sql = "SELECT c.chat_id, c.m_id, c.w_id, " +
+                        "m.name AS managerName, w.name AS workerName " +  // Removed the extra comma here
+                        "FROM chat c " +
+                        "JOIN user m ON c.m_id = m.id " +         // Join to get manager name
+                        "JOIN user w ON c.w_id = w.id " +         // Join to get worker name
+                        "JOIN message msg ON c.chat_id = msg.chat_id " + // Join to get message
+                        "WHERE c.m_id = ? " + 
+                        "ORDER BY msg.message_id DESC ";          // Order by the most recent message
+
+
+                // Use PreparedStatement to prevent SQL injection
+                try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+                    pstmt.setInt(1, m_id);  // Set the w_id parameter
+
+                    // Execute the query
+                    try (ResultSet rs = pstmt.executeQuery()) {
+                        // Loop through all results and create Chat objects
+                        while (rs.next()) {
+                            // Create a new Chat object and set its properties
+                            Chat chat = new Chat(
+                                rs.getInt("chat_id"),
+                                rs.getInt("m_id"),
+                                rs.getInt("w_id"),
+                                rs.getString("managerName"), // Get manager name from result set
+                                rs.getString("workerName")   // Get worker name from result set
+                            );
+
+                            // Add the chat to the list
+                            chatList.add(chat);
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace(); // Handle exceptions by printing the stack trace
+            } finally {
+                try {
+                    if (rs != null) rs.close();
+                    if (con != null) con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return chatList; // Return the list of Chat objects
+        }
+        
 
 }

@@ -19,6 +19,7 @@ public class SendMessage extends HttpServlet {
 		String c_id = request.getParameter("chat_id");
 		String s_id = request.getParameter("sender_id");
 		String message = request.getParameter("message");
+        String origin = request.getParameter("origin");
 
 
 
@@ -43,7 +44,11 @@ public class SendMessage extends HttpServlet {
 	            request.setAttribute("chatId", chat_id);
 	            request.setAttribute("userId", sender_id);
 	            System.out.println("chatId and userId after send msg "+chat_id+"  "+sender_id );
-	            request.getRequestDispatcher("/getChatList").forward(request, response);
+	            if ("Wjsp".equals(origin)) {
+		            request.getRequestDispatcher("/getChatList").forward(request, response);
+	            } else if ("Mjsp".equals(origin)) {
+	                request.getRequestDispatcher("/AgetChatList").forward(request, response);
+	            }
 	            
 	        } else {
 	            // If chat was not inserted, pass an error message

@@ -52,7 +52,12 @@ public class GetChatMessage extends HttpServlet {
 	    	request.setAttribute("messages", messages);  
 	    	request.setAttribute("IchatId", IchatId);            
 	    } 
-	    request.getRequestDispatcher("views/Wchat.jsp").forward(request, response);
+	    String origin = (String) request.getAttribute("origin");
+        if ("Aservlet".equals(origin)) {
+            request.getRequestDispatcher("views/Mchat.jsp").forward(request, response);  
+        } else if ("Wservlet".equals(origin)) {
+            request.getRequestDispatcher("views/Wchat.jsp").forward(request, response); 
+        } 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

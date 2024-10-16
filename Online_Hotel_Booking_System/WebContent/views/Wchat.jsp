@@ -59,9 +59,8 @@
     <c:if test="${chat.m_id == 1}">
         <c:set var="m1Found" value="true" /> <!-- Set the flag if found -->
         <div class="chat">
-           <a href=${pageContext.request.contextPath}/GetChatMessage?chatId=${chat.chat_id}>    
+           <a href=${pageContext.request.contextPath}/getChatList?chatId=${chat.chat_id}&userId=${userId}>    
 	            <p>Manager Name: ${chat.managerName}</p>
-	            <p>Worker Name: ${chat.workerName}</p>
             </a>   
             <hr>
         </div>
@@ -73,7 +72,6 @@
         <div class="chat">
             <a href=${pageContext.request.contextPath}/getChatList?chatId=${chat.chat_id}&userId=${userId}>       
             <p>Manager Name: ${chat.managerName}</p>
-            <p>Worker Name: ${chat.workerName}</p>
             </a>
             <hr>
         </div>
@@ -115,6 +113,7 @@
     <form action="${pageContext.request.contextPath}/SendMessage" method="post" class="message-form">
         <input type="hidden" name="chat_id" value="${IchatId}"> 
         <input type="hidden" name="sender_id" value="${userId}"> 
+         <input type="hidden" name="origin" value="Wjsp">
         <textarea name="message" placeholder="Type your message here..." required></textarea><br>
         <button type="submit">Send Message</button>
     </form>
