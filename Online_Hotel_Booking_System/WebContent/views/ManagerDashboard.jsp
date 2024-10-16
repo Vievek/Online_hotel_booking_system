@@ -14,12 +14,10 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
+<jsp:include page="AdminHeader.jsp" />
 <body>
 <h1>manager dashboard</h1>
-	<h1>Welcome, <%= username %>!</h1>
-    	<p>Your user ID is: <%= userId %></p>
-    	    <a href="${pageContext.request.contextPath}/logout">Logout</a>
-    	    <a href="${pageContext.request.contextPath}/AgetChatList?Id=${userId}">Chat</a>
+	
     	    
     	
 </body>

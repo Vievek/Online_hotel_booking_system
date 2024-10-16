@@ -26,7 +26,7 @@
             <a href="${pageContext.request.contextPath}/views/Login.jsp">Login</a>
         
     <% } %>
-    		 <a href="${pageContext.request.contextPath}/getAllrooms">Rooms</a>
+    		 <a href="${pageContext.request.contextPath}/getAllrooms?page=user">Rooms</a>
   
 </body>
 </html>

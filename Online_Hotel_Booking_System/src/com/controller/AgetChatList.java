@@ -12,9 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.model.Chat;
 import com.util.Chat_util;
 
-/**
- * Servlet implementation class AgetChatList
- */
+
 @WebServlet("/AgetChatList")
 public class AgetChatList extends HttpServlet {
 	private static final long serialVersionUID = 1L;

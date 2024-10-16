@@ -351,5 +351,47 @@ public class user_util {
 
     	    return isSuccess;  // Return whether the deletion was successful
     	}
+       
+       public static List<registered_user> getUsersByRole(String role) {
+    	    List<registered_user> users = new ArrayList<>(); // List to store registered_user objects
+    	    Connection con = null;
+    	    Statement stmt = null;
+    	    ResultSet rs = null;
+
+    	    try {
+    	        con = DBconnect.getConnection(); // Get the database connection
+    	        stmt = con.createStatement(); // Create a statement
+    	        String sql = "SELECT * FROM user WHERE role = '" + role + "'"; // SQL query to select users with the specified role
+    	        rs = stmt.executeQuery(sql); // Execute the query
+
+    	        while (rs.next()) { // Iterate through the result set
+    	            int id = rs.getInt(1); // Get ID
+    	            String name = rs.getString(2); // Get Name
+    	            String email = rs.getString(3); // Get Email
+    	            String phone = rs.getString(4); // Get Phone
+    	            String userU = rs.getString(5); // Get Username
+    	            String passU = rs.getString(6); // Get Password
+    	            String userRole = rs.getString(7); // Get Role
+
+    	            // Create a registered_user object and add it to the list
+    	            registered_user u = new registered_user(id, name, email, phone, userU, passU, userRole);
+    	            users.add(u);
+    	        }
+    	    } catch (Exception e) {
+    	        e.printStackTrace(); // Handle exceptions by printing the stack trace
+    	    } finally {
+    	        // Close resources
+    	        try {
+    	            if (rs != null) rs.close();
+    	            if (stmt != null) stmt.close();
+    	            if (con != null) con.close();
+    	        } catch (SQLException e) {
+    	            e.printStackTrace();
+    	        }
+    	    }
+
+    	    return users; // Return the list of registered_user objects
+    	}
+
 
 }

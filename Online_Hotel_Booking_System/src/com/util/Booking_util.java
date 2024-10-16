@@ -209,6 +209,58 @@ public class Booking_util {
 
 	        return bookingList; // Return the list of Booking objects (can be empty if no bookings found)
 	    }
+	    
+	    public static List<Booking> getAllBookingDetails() {
+	        List<Booking> bookingList = new ArrayList<>(); // Initialize the list to hold Booking objects
+
+	        try {
+	            // Get a connection from the database
+	            con = DBconnect.getConnection();
+
+	            // SQL query to select all booking details
+	            String sql = "SELECT b_id, room_price, service_price, total_amount, check_in, check_out, payment_status, ru_id, r_id " +
+	                         "FROM booking"; // Query to select all records from the booking table
+
+	            // Use PreparedStatement to prevent SQL injection (even though no parameters here)
+	            try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+	                // Execute the query
+	                try (ResultSet rs = pstmt.executeQuery()) {
+	                    while (rs.next()) { // Iterate through all results
+	                        // Create a new Booking object and set its properties
+	                        Booking bookingDetails = new Booking(
+	                            rs.getInt("b_id"),
+	                            rs.getString("room_price"),
+	                            rs.getString("service_price"),
+	                            rs.getString("total_amount"),
+	                            rs.getString("check_in"),
+	                            rs.getString("check_out"),
+	                            rs.getString("payment_status"),
+	                            rs.getInt("ru_id"),
+	                            rs.getInt("r_id")
+	                        );
+
+	                        // Optional: Print the details for debugging
+	                        System.out.println("Booking ID: " + bookingDetails.getId());
+	                        System.out.println("RU ID: " + bookingDetails.getRu_id());
+
+	                        // Add the Booking object to the list
+	                        bookingList.add(bookingDetails);
+	                    }
+	                }
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace(); // Handle exceptions by printing the stack trace
+	        } finally {
+	            try {
+	                if (rs != null) rs.close();
+	                if (con != null) con.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        return bookingList; // Return the list of Booking objects (can be empty if no bookings found)
+	    }
 
 	   
 	}

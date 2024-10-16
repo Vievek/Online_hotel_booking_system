@@ -161,5 +161,50 @@ public class Payment_util {
 
 	            return paymentList; // Return the list of payment details
 	        }
+	        
+	        public static List<Payment> getAllPaymentDetails() {
+	            List<Payment> paymentList = new ArrayList<>(); // List to store Payment objects
+	            Connection con = null;
+
+	            try {
+	                // Get a connection from the database (assuming DBconnect is your connection class)
+	                con = DBconnect.getConnection();
+
+	                // SQL query to select all payment details, including payment_date, without any filtering condition
+	                String sql = "SELECT p_id, amount, payment_type, remaining_amount, b_id, payment_date " +
+	                             "FROM payment " +
+	                             "ORDER BY p_id DESC"; // Order by p_id in descending order
+	                
+	                // Use PreparedStatement to execute the query
+	                try (PreparedStatement pstmt = con.prepareStatement(sql);
+	                     ResultSet rs = pstmt.executeQuery()) { // Execute the query and get the result set
+	                    
+	                    // Iterate through the result set and create Payment objects
+	                    while (rs.next()) {
+	                        Payment payment = new Payment(
+	                            rs.getInt("p_id"),
+	                            rs.getString("amount"),
+	                            rs.getString("payment_type"),
+	                            rs.getString("remaining_amount"),
+	                            rs.getInt("b_id"),
+	                            rs.getString("payment_date") // Retrieve payment_date and set it in Payment object
+	                        );
+	                        paymentList.add(payment); // Add the Payment object to the list
+	                    }
+	                }
+	            } catch (Exception e) {
+	                e.printStackTrace(); // Handle exceptions by printing the stack trace
+	            } finally {
+	                // Ensure resources are closed
+	                try {
+	                    if (con != null) con.close();
+	                } catch (SQLException e) {
+	                    e.printStackTrace();
+	                }
+	            }
+
+	            return paymentList; // Return the list of payment details
+	        }
+
 
 }

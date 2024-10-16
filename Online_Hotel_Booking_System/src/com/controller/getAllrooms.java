@@ -3,6 +3,7 @@ package com.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,6 +22,8 @@ public class getAllrooms extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String page = request.getParameter("page");
+
         List<rooms> room = rooms_util.getAllrooms();
         
         // Debug: Log room data to the server console
@@ -40,7 +43,12 @@ public class getAllrooms extends HttpServlet {
         } else {
             // Set the rooms as an attribute and forward to the JSP
             request.setAttribute("room", room);
-            request.getRequestDispatcher("views/rooms.jsp").forward(request, response);
+            if (page != null && page.equals("user")) {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("views/rooms.jsp");
+                dispatcher.forward(request, response);
+            } else if (page != null && page.equals("admin")) {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("views/ARoomList.jsp");
+                dispatcher.forward(request, response);}
         }
     }
 }
