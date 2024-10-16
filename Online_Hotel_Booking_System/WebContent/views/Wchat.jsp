@@ -59,7 +59,7 @@
     <c:if test="${chat.m_id == 1}">
         <c:set var="m1Found" value="true" /> <!-- Set the flag if found -->
         <div class="chat">
-           <a href=${pageContext.request.contextPath}/getChatList?chatId=${chat.chat_id}&userId=${userId}>    
+           <a href=${pageContext.request.contextPath}/getChatList?chatId=${chat.chat_id}&Id=${userId}>    
 	            <p>Manager Name: ${chat.managerName}</p>
             </a>   
             <hr>
@@ -70,7 +70,7 @@
     <c:if test="${chat.m_id == 26}">
         <c:set var="m26Found" value="true" /> <!-- Set the flag if found -->
         <div class="chat">
-            <a href=${pageContext.request.contextPath}/getChatList?chatId=${chat.chat_id}&userId=${userId}>       
+            <a href=${pageContext.request.contextPath}/getChatList?chatId=${chat.chat_id}&Id=${userId}>       
             <p>Manager Name: ${chat.managerName}</p>
             </a>
             <hr>
@@ -82,7 +82,7 @@
 <c:if test="${not m1Found}">
     <div>
         <p> No chat with Manager John Doe </p>
-        <a href=${pageContext.request.contextPath}/WCreateChat?userId=${userId}&m_id=1>Click to chat</a>
+        <a href=${pageContext.request.contextPath}/WCreateChat?Id=${userId}&m_id=1>Click to chat</a>
     </div>
 </c:if>
 
@@ -90,7 +90,7 @@
 <c:if test="${not m26Found}">
     <div>
         <p>No chat with Manager Thiruverakan</p>
-        <a href=${pageContext.request.contextPath}/WCreateChat?userId=${userId}&m_id=26>Click to chat</a>
+        <a href=${pageContext.request.contextPath}/WCreateChat?Id=${userId}&m_id=26>Click to chat</a>
     </div>
 </c:if>
 

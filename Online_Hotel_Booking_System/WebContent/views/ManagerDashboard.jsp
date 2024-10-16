@@ -19,7 +19,7 @@
 	<h1>Welcome, <%= username %>!</h1>
     	<p>Your user ID is: <%= userId %></p>
     	    <a href="${pageContext.request.contextPath}/logout">Logout</a>
-    	    <a href="${pageContext.request.contextPath}/AgetChatList?userId=${userId}">Chat</a>
+    	    <a href="${pageContext.request.contextPath}/AgetChatList?Id=${userId}">Chat</a>
     	    
     	
 </body>

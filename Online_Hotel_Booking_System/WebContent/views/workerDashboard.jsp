@@ -21,7 +21,7 @@
     	<p>Your Wuser ID is: <%= WuserId %></p>
     	<p>Your user ID is: <%= userId %></p>
     	    <a href="${pageContext.request.contextPath}/logout">Logout</a>
-    	    <a href="${pageContext.request.contextPath}/getChatList?userId=${userId}">Chat</a>
+    	    <a href="${pageContext.request.contextPath}/getChatList?Id=${userId}">Chat</a>
     	    
     	
 </body>

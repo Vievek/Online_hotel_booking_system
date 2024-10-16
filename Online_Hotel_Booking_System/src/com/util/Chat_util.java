@@ -125,13 +125,13 @@ public class Chat_util {
 
                 // SQL query to select chats and join with user table to get names of manager and worker
                 String sql = "SELECT c.chat_id, c.m_id, c.w_id, " +
-                        "m.name AS managerName, w.name AS workerName " +  // Removed the extra comma here
+                        "m.name AS managerName, w.name AS workerName " + 
                         "FROM chat c " +
                         "JOIN user m ON c.m_id = m.id " +         // Join to get manager name
                         "JOIN user w ON c.w_id = w.id " +         // Join to get worker name
-                        "JOIN message msg ON c.chat_id = msg.chat_id " + // Join to get message
                         "WHERE c.m_id = ? " + 
-                        "ORDER BY msg.message_id DESC ";          // Order by the most recent message
+                        "ORDER BY c.chat_id DESC ";                // Order by chat ID or any other relevant field
+
 
 
                 // Use PreparedStatement to prevent SQL injection

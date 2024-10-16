@@ -22,11 +22,11 @@ public class AgetChatList extends HttpServlet {
 		    
 			protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 				// Try to get userId from the request parameter first
-				String userid = request.getParameter("userId");
+				String userid = request.getParameter("Id");
 
 				// If the parameter is null or empty, try to get it as an attribute
 				if (userid == null || userid.isEmpty()) {
-				    Object userIdAttribute = request.getAttribute("userId");
+				    Object userIdAttribute = request.getAttribute("Id");
 				    
 				    // Check if the attribute is not null and is of String or can be cast to String
 				    if (userIdAttribute != null) {

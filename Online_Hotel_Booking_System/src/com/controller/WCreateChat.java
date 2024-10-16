@@ -16,7 +16,7 @@ public class WCreateChat extends HttpServlet {
        
  
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 String w_id = request.getParameter("userId");
+		 String w_id = request.getParameter("Id");
 		 String M_id = request.getParameter("m_id");
 
 

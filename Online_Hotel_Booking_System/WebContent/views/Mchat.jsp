@@ -53,7 +53,7 @@
 <!-- Iterate over the chats list -->
 <c:forEach var="chat" items="${chats}">
         <div class="chat">
-           <a href=${pageContext.request.contextPath}/AgetChatList?chatId=${chat.chat_id}&userId=${userId}>    
+           <a href=${pageContext.request.contextPath}/AgetChatList?chatId=${chat.chat_id}&Id=${userId}>    
 	            <p>Worker Name: ${chat.workerName}</p>
             </a>   
             <hr>

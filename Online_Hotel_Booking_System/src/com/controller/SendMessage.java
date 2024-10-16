@@ -42,7 +42,7 @@ public class SendMessage extends HttpServlet {
 	        if (success) {
 	            // If chat was inserted, pass the chatId as an attribute to the next servlet/page
 	            request.setAttribute("chatId", chat_id);
-	            request.setAttribute("userId", sender_id);
+	            request.setAttribute("Id", sender_id);
 	            System.out.println("chatId and userId after send msg "+chat_id+"  "+sender_id );
 	            if ("Wjsp".equals(origin)) {
 		            request.getRequestDispatcher("/getChatList").forward(request, response);
