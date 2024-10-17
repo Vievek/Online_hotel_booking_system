@@ -20,10 +20,35 @@
             background-color: #f9f9f9;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+           
         }
+        nav{
+        	grid-row: 1 / 2; 
+  			grid-column: 1/ 3;
+  			border: 2px solid black;
+  			background-color: #333; /* Background color for the navbar */
+  			padding: 10px 30px; /* Padding around the navbar */
+  			color: white;
+        }
+        nav ul{
+            display: flex;                   /* Enables flexbox */
+		    flex-direction: row;            /* Sets the direction of the flex items to row */
+		    justify-content: space-between;
+		    list-style: none;
+		    allign-items:center;
+        }
+        nav ul li a{
+        	text-decoration: none;
+        	color: white;
+        }
+        
+        .navsub{
+        	display: flex;                   /* Enables flexbox */
+		    flex-direction: row;            /* Sets the direction of the flex items to row */
+		    justify-content: space-around;
+		    gap:50px;
+        }
+        
         h2 {
             color: #333;
             margin-top: 20px;
@@ -77,12 +102,23 @@
     </style>
 </head>
 <body>
-<h1>workerDashboard</h1>
-	<h1>Welcome, <%= username %>!</h1>
-    	<p>Your Wuser ID is: <%= WuserId %></p>
-    	<p>Your user ID is: <%= userId %></p>
-    	    <a href="${pageContext.request.contextPath}/logout">Logout</a>
-    	    <a href="${pageContext.request.contextPath}/getChatList?Id=${userId}">Chat</a>
+
+<section class="body">
+<nav>
+	<ul>
+		<li>Rooms</li>
+		<li><a href="${pageContext.request.contextPath}/Wtasks">Dashboard</a></li>
+		<div class="navsub">
+			<li><a href="${pageContext.request.contextPath}/getChatList?Id=${userId}">Chat</a></li>
+			<li><%= username %></li>
+			<li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
+		</div>
+	</ul>
+</nav>
+	<div class="welcome">
+		<h1>Welcome, <%= username %>!</h1>
+	</div>
+    	
     	<table>
         <tr>
             
@@ -115,5 +151,6 @@
             </tr>
         </c:if>
     </table>
+    </section>
 </body>
 </html>
