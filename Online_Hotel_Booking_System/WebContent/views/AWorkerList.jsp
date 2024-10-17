@@ -74,7 +74,6 @@
 <body>
     <h2>Payment List</h2>
 
-    <a href="<%=request.getContextPath() %>/new" class="add-btn">Add New Payment</a>
 
     <table>
         <tr>

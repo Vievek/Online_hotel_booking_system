@@ -74,7 +74,7 @@
 <body>
     <h2>Payment List</h2>
 
-    <a href="<%=request.getContextPath() %>/new" class="add-btn">Add New Payment</a>
+    <a href="${pageContext.request.contextPath}/views/addServices.jsp" class="add-btn">Add Service</a>
 
     <table>
         <tr>
@@ -82,7 +82,6 @@
             <th>Service Name</th>
             <th>Descriptions</th>
             <th>Price</th>
-            <th>Worker's Salary/Month</th>
             
             
         </tr>
@@ -93,12 +92,11 @@
                     <td>${ser.name}</td>
                     <td>${ser.description}</td>
                     <td>${ser.price}</td>
-                    <td>${ser.m_id}</td>
                     
                   
                     <td class="actions">
-                        <a href="edit?id=${payment.pId}">Edit</a>
-                        <a href="delete?id=${payment.pId}">Delete</a>
+                        <a href="${pageContext.request.contextPath}/ShowServiceEdit?id=${ser.services_id}">Edit</a>
+                        <a href="${pageContext.request.contextPath}/deleteService?id=${ser.services_id}">Delete</a>
                     </td>
                 </tr>
             </c:forEach>

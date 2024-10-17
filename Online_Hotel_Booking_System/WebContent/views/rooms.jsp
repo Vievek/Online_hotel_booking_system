@@ -77,6 +77,7 @@
             <c:if test="${rom.availabilityStatus == 'Available'}">
                 <a href="${pageContext.request.contextPath}/roomDetails?roomId=${rom.roomId}&userId=${ru_id}" >	  
                 <div class="room">
+                
                     <h3>${rom.roomType} (Room ID: ${rom.roomId})</h3>
                     <p>Description: ${rom.description}</p>
                     <p>Capacity: ${rom.noOfPerson} Persons</p>

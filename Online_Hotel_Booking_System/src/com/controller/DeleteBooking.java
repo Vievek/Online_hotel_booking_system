@@ -26,7 +26,7 @@ public class DeleteBooking extends HttpServlet {
 
 	        if (delete) {
 	            // If deletion is successful, navigate to a success page
-	            response.sendRedirect("views/home.jsp"); // Change this to your success page
+                request.getRequestDispatcher("/").forward(request, response);
 	        } else {
 	            // If deletion fails, set an error message and navigate to an error page
 	            request.setAttribute("errorMessage", "Failed to delete booking service. Please try again.");
