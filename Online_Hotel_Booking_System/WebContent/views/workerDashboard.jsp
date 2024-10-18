@@ -137,10 +137,7 @@
                     <td>${bookingService.startTime}</td>
                     <td>${bookingService.endTime}</td>
                   
-                    <td class="actions">
-                        <a href="edit?id=${payment.pId}">Edit</a>
-                        <a href="delete?id=${payment.pId}">Delete</a>
-                    </td>
+                    
                 </tr>
             </c:forEach>
         </c:if>

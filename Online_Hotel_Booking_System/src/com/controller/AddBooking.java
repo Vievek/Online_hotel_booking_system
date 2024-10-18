@@ -79,6 +79,8 @@ public class AddBooking extends HttpServlet {
         double totalServiceCost = parseDouble(totalServiceCostStr);
         double totalCost = parseDouble(totalCostStr);
         double roomPrice = parseDouble(roomPriceStr);
+        
+        System.out.println(totalServiceCost);
 
         int bid = Booking_util.insertBooking(roomPriceStr, totalServiceCostStr, totalCostStr, checkInDate, checkOutDate, userId, roomId);
 

@@ -153,7 +153,7 @@
     <c:if test="${not empty room}">
     <c:forEach var="rom" items="${room}">
         <c:if test="${rom.availabilityStatus == 'Available'}">
-            <div class="room" style="display: flex; flex-direction: column; align-items: center; padding: 15px; border: 2px solid #000; border-radius: 10px; margin: 10px; width: 300px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <div class="room" style="display: flex; flex-direction: column; align-items: center; padding: 15px; background-color: #FFD79E; border-radius: 10px; margin: 10px; width: 300px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                 
                 <% if (userId != null && username != null) { %>
                     <a class="favourite" href="${pageContext.request.contextPath}/addFavouriteRoom?roomId=${rom.roomId}&userId=${ru_id}" style="align-self: flex-end; margin-bottom: 10px; text-decoration: none;">

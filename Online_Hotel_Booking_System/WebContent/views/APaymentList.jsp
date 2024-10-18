@@ -118,6 +118,7 @@
 		<li>Rooms</li>
 		<div class="navsub">
 			<li><%= username %></li>
+			<li><a href="${pageContext.request.contextPath}/AgetChatList?Id=${userId}">Chat</a></li>						
 			<li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
 		</div>
 	</ul>

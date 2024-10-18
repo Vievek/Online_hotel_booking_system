@@ -85,8 +85,8 @@
 	<div class="normal" >
 		<a href="${pageContext.request.contextPath}/?userId=${ru_id}" style="color:#484848">home</a>    	
 		<a href="${pageContext.request.contextPath}/getAllrooms?page=user" style="color:#484848">Find a property</a>
-		<a href="#" style="color:#484848">Rental Guides</a>
-        <a href="#" style="color:#484848">Contact us</a>
+		<a href="${pageContext.request.contextPath}/views/contactus.jsp" style="color:#484848">Contact us</a>
+        <a href="${pageContext.request.contextPath}/views/reservationguide.jsp" style="color:#484848">Rental Guides</a>
 	</div>
 	<% if (userId != null && username != null) { %>
 	 <div class="user">
@@ -101,7 +101,7 @@
 		   <% }
 	else { %>
 	<div class="user">
-    	<p style="color:#484848;  font-weight: bold" >Welcome,Guest!</p>
+    	<p style="color:#484848;  font-weight: bold" >Hi,Guest!</p>
          <a href="${pageContext.request.contextPath}/views/Login.jsp" style="color: white" class="login-btn">Login</a>
      </div>
     <% } %>

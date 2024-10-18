@@ -14,15 +14,74 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
  <style>
-        body {
+        .body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
-            padding: 20px;
+            padding:0;
+            margin:0;
+            display:grid;
+            grid-template-rows: 50px 1fr;
+            grid-template-columns: 1fr 5fr;
+            min-height: 100vh;
+            
+        }
+        nav{
+        	grid-row: 1 / 2; 
+  			grid-column: 1/ 3;
+  			border: 2px solid black;
+  			background-color: #333; 
+  			padding: 10px 30px; 
+  			color: white;
+        }
+        nav ul{
+            display: flex;                  
+		    flex-direction: row;            
+		    justify-content: space-between;
+		    list-style: none;
+		    allign-items:center;
+        }
+        nav ul li a{
+        	text-decoration: none;
+        	color: white;
+        }
+        
+        .navsub{
+        	display: flex;                   
+		    flex-direction: row;            
+		    justify-content: space-around;
+		    gap:50px;
+        }
+        
+       
+        .chats{
+        	grid-row: 2 / 3; 
+  			grid-column: 1 / 2;
+  			border: 2px solid black;
+  			display: flex;
+		    flex-direction: column; /* Align items in a column */
+		    justify-content: flex-start; /* Align items to the start */
+		    gap: 20px; /* Space between items */
+		    padding:50px 5px;
+  			
+        }
+        .chat{
+        	border: 2px solid black;
+        	padding 25px
+        }
+        .messages{
+        	grid-row: 2 / 3; 
+  			grid-column: 2 / 3;
+  			border: 2px solid black;
+  			display: grid;
+		    grid-template-rows: 1fr 50px;
+		    padding:50px 5px;
         }
         .message-container {
             display: flex;
             flex-direction: column;
-            margin: 10px 0;
+            padding:20px;
+            border: 2px solid black;
+            grid-row: 1 / 2;
         }
         .message {
             padding: 10px;
@@ -44,12 +103,44 @@
             color: red;
             font-weight: bold;
         }
+        .msgform{
+        	grid-row: 2 / 3;
+			padding:10px 5px;   
+			
+        }
+        .msgform-items{
+          display:grid;
+          gap:10px;
+          grid-template-columns: 1fr 200px;
+          grid-template-rows: 1fr ;
+        }
+        .msgform-items textarea{
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+        border: 2px solid black;
+        }
+        .msgform-items button{
+        grid-column: 2 / 3;
+         grid-row: 1 / 2;
+        border: 2px solid black;
+        }
+        
     </style>
 </head>
 <body>
-<p>Your user ID is: <%= userId %></p>
+<section class="body">
+<nav>
+	<ul>
+		<li>Rooms</li>
+		<div class="navsub">
+			<li><%= username %></li>
+			<li><a href="${pageContext.request.contextPath}/AgetChatList?Id=${userId}">Chat</a></li>			
+			<li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
+		</div>
+	</ul>
+</nav>
 
-
+<section class="chats">
 <!-- Iterate over the chats list -->
 <c:forEach var="chat" items="${chats}">
         <div class="chat">
@@ -60,12 +151,11 @@
         </div>
 </c:forEach>
 
+</section>
 
 
-<hr>
-<hr>
 
-<h2>Chat Messages</h2>
+<section class="messages">
 
 <div class="message-container">
     <c:if test="${not empty messages}">
@@ -82,12 +172,15 @@
         <input type="hidden" name="chat_id" value="${IchatId}"> 
         <input type="hidden" name="sender_id" value="${userId}">
          <input type="hidden" name="origin" value="Mjsp"> 
+         <div class="msgform-items">
         <textarea name="message" placeholder="Type your message here..." required></textarea><br>
         <button type="submit">Send Message</button>
+        </div>
     </form>
 </c:if>
 
- 
+</section>
+ </section>
 
 
 </body>

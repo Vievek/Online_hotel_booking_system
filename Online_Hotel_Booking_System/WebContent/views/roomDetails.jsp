@@ -12,7 +12,16 @@
 <head>
     <meta charset="ISO-8859-1">
     <title>Available Rooms</title>
-    <link rel="stylesheet" type="text/css" href="styles.css"> <!-- Link to your CSS file -->
+    <style >
+    
+    .new{
+    	display:flex;
+    	flex-direction:row;
+    	justify-content:space-between;
+    }
+   
+    
+    </style>
 </head>
 <jsp:include page="userHeader.jsp" />
 <body>
@@ -21,13 +30,12 @@
     <div class="room-listing">
         <c:if test="${not empty room}">
             <c:forEach var="rom" items="${room}">
-                <div class="room">
-                    <h3>${rom.roomType} (Room ID: ${rom.roomId})</h3>
+                <div class="room" style="text-align: center; font-weight: bold; margin-bottom: 20px; border: 1px solid #ccc; padding: 10px;">
+                    <h3 style="color: #FF007B; font-size: 24px;"  >${rom.roomType} (Room ID: ${rom.roomId})</h3>
                     <p>Description: ${rom.description}</p>
                     <p>Capacity: ${rom.noOfPerson} Persons</p>
                     <p>Price: $<span id="roomPrice">${rom.price}</span></p> <!-- Display room price here -->
                     <p>AC Type: ${rom.ac_type}</p>
-                    <img src="${pageContext.request.contextPath}/${rom.img1}" alt="Image of ${rom.roomType} (Room ID: ${rom.roomId})" />
                     <hr/>     
 					 <input type="hidden"  name="roomPrice" id="roomPriceHidden" value="${rom.price}"> <!-- Store room price in hidden input -->  
 					 <input type="hidden" name="roomId" value="${rom.roomId}"> <!-- Store room ID in hidden input -->	
@@ -46,9 +54,9 @@
     <% if (userId != null && username != null) { %>
     
   <!-- Total cost section -->
-    <p>Total Services Cost: $<span id="totalCost">0</span></p>
-    <p>Room Price: $<span id="roomPriceDisplay">0</span></p> <!-- Initialize room price display -->
-    <p>Total Booking Cost: $<span id="totalBookingCost">0</span></p> <!-- Total booking cost displayed here -->
+    <p style="text-align: left; font-weight: bold; margin-bottom: 20px; border: 1px solid #ccc; padding: 10px;">Total Services Cost: $<span id="totalCost">0</span></p>
+    <p style="text-align: left; font-weight: bold; margin-bottom: 20px; border: 1px solid #ccc; padding: 10px;">Room Price: $<span id="roomPriceDisplay">0</span></p> <!-- Initialize room price display -->
+    <p style="text-align: left; font-weight: bold; margin-bottom: 20px; border: 1px solid #ccc; padding: 10px;">Total Booking Cost: $<span id="totalBookingCost">0</span></p> <!-- Total booking cost displayed here -->
     
     <form action="${pageContext.request.contextPath}/AddBooking" method="post">
     
@@ -59,9 +67,9 @@
     	<input type="hidden" name="roomPrice" id="roomPriceHidden" value="${booking.room_price}"> <!-- Room price to be passed -->
         
         <label>checkInDate</label>
-        <input type="date" name="checkInDate"  value=${booking.checkin} required> <!-- Check-in date -->
+        <input type="date" name="checkInDate"  value=${booking.checkin} required><br><br> <!-- Check-in date -->
         <label>checkOutDate</label>
-        <input type="date" name="checkOutDate" value=${booking.checkout} required> <!-- Check-out date -->
+        <input type="date" name="checkOutDate" value=${booking.checkout} required> <br><br><!-- Check-out date -->
     
     <c:if test="${not empty services}">
     <c:forEach var="ser" items="${services}">
@@ -69,7 +77,7 @@
         
         <c:forEach var="service" items="${Rservices}">
             <c:if test="${service.servicesId eq ser.services_id}">
-                <div class="room">           
+                <div class="new">           
                     <label>${ser.name}</label>
                     <input type="date" id="${ser.services_id}_date" name="${ser.services_id}Date" value="${service.date}">
                     <input type="time" id="${ser.services_id}_time_start" name="${ser.services_id}TimeStart" value="${service.startTime}">
@@ -113,7 +121,7 @@
             <p>No services available at the moment.</p> <!-- Message for no available rooms -->
         </c:if>
 
-    <input type="submit" value="Submit" name="Submit">
+    <center><input type="submit" value="Submit" name="Submit" style="background-color: #FF007B; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 5px;"></center>
 </form>
 
     	   <% }
@@ -180,4 +188,6 @@
 </script>
 
 </body>
+<jsp:include page="footer.jsp" />
+
 </html>

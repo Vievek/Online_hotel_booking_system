@@ -90,10 +90,18 @@
   		grid-column: 1 / 4;
 		margin:20px 100px 0;
 		padding:20px 300px;
-		border: 3px solid #ff6347; /* 3px solid tomato-colored border */
+		border: 3px solid #FF007B; /* 3px solid tomato-colored border */
     	border-radius: 10px;
     	width: auto;
   		
+  	}
+  	
+  	.sroom{
+  		border: 3px solid #FF007B; /* 3px solid tomato-colored border */
+    	border-radius: 10px;
+    	padding: 20px;
+  	
+  	
   	}
 	
 </style>
@@ -131,17 +139,19 @@
 	 </div>		
 	 
 	 <div class="btns">
- 		  <a href="${pageContext.request.contextPath}/ShowEditUser?uId=${ru_id}"> edit profile</a>
-		  <a href="${pageContext.request.contextPath}/DeleteAccount?uId=${ru_id}"> delete account</a>
-		  <a href="${pageContext.request.contextPath}/logout">Logout</a>
+ 		  <a href="${pageContext.request.contextPath}/ShowEditUser?uId=${ru_id}" style="background-color: #FF007B; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 5px;"> edit profile</a>
+		  <a href="${pageContext.request.contextPath}/DeleteAccount?uId=${ru_id}" style="background-color: #FF007B; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 5px;"> delete account</a>
+		  <a href="${pageContext.request.contextPath}/logout" style="background-color: #FF007B; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 5px;">Logout</a>
 	 </div>
 	
  
   
  <div class="booking">
  		  <h2>Bookings</h2>
+ 		  
 	    <c:if test="${not empty bookingsWithPayments}">
 	        <c:forEach var="bookingWithPayments" items="${bookingsWithPayments}">
+	        <div class="sroom">
 	            <h3>Booking ID: ${bookingWithPayments.booking.id}</h3>
 	            <p>Room Price: ${bookingWithPayments.booking.room_price}</p>
 	            <p>Service Price: ${bookingWithPayments.booking.service_price}</p>
@@ -179,12 +189,13 @@
 				    <p>No payments found for this booking.</p>
 				</c:if>
 				<c:if test="${payment.remainingAmount != '0'}">
-				    <a href="${pageContext.request.contextPath}/PaymentRead?bId=${bookingWithPayments.booking.id}">Pay Remaining Amount</a>
+				    <a href="${pageContext.request.contextPath}/PaymentRead?bId=${bookingWithPayments.booking.id}" style="background-color: #FF007B; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 5px;">Pay Remaining Amount</a>
 				</c:if>
-	
+	 			</div>
+	 			<br>
 	        </c:forEach>
 	    </c:if>
-	    
+	   
 	    <c:if test="${empty bookingsWithPayments}">
 	        <p>No bookings found for this user.</p>
 	    </c:if>
