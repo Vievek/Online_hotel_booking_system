@@ -10,23 +10,72 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<style>
+	body{
+	padding:0;
+	margin:0;
+	}
+	.nav{
+		display:flex;
+		flex-direction:row;
+		gap:450px;
+		align-items: center;
+		background-color: #333; 
+		padding: 10px 30px 10px; 
+		color: white;
+	}
+	.normal{
+		display:flex;
+		flex-direction:row;
+		align-items: center;
+		gap:150px;
+	}
+	.user{
+		display:flex;
+		flex-direction:row;
+		align-items: center;
+		gap:40px;
+	
+	}
+	.userprofile{
+		display:flex;
+		flex-direction:row;
+		align-items: center;
+		gap:10px;
+	}
+	
+	a{
+	 	text-decoration: none;
+        color: #1a73e8;
+        font-weight: bold;
+	}
+</style>
 </head>
 <body>
+<section class="nav">
+	<div class="name">ROOMS</div>
+	<div class="normal">
+		<a href="${pageContext.request.contextPath}/?userId=${ru_id}" >home</a>    	
+		<a href="${pageContext.request.contextPath}/getAllrooms?page=user">Rooms</a>		
+	</div>
 	<% if (userId != null && username != null) { %>
-	   	<h1>Welcome, <%= username %>!</h1>
-    	<p>Your user ID is: <%= userId %></p>
-        <a href="${pageContext.request.contextPath}/?userId=${ru_id}" >home</a>    	
-		<a href="${pageContext.request.contextPath}/favouriteRooms?uid=<%= userId %>">Favourite</a> 
-		 <a href="${pageContext.request.contextPath}/logout">Logout</a>
-		 <a href="${pageContext.request.contextPath}/ReadUserProfile?userId=${ru_id}" >user profile</a>
+	 <div class="user">
+		<a href="${pageContext.request.contextPath}/favouriteRooms?uid=<%= userId %>">
+			<i class="bi bi-heart favorite"></i>
+		</a> 
+	 	<a class="userprofile" href="${pageContext.request.contextPath}/ReadUserProfile?userId=${ru_id}" >
+		   	<p>Welcome,<%= username %>! </p><i class="bi bi-person-circle"></i>
+		 </a>
+     </div>
+		
 		   <% }
 	else { %>
-    	<h1>Welcome, Guest!</h1>
-        <p>You are not logged in. Please log in to access your favorites.</p>
-            <a href="${pageContext.request.contextPath}/views/Login.jsp">Login</a>
-        
+	<div class="user">
+    	<p>Welcome,Guest!</p>
+         <a href="${pageContext.request.contextPath}/views/Login.jsp">Login</a>
+     </div>
     <% } %>
-    		 <a href="${pageContext.request.contextPath}/getAllrooms?page=user">Rooms</a>
-  
+  </section>
 </body>
 </html>
