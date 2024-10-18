@@ -18,13 +18,40 @@
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
     margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 0;   
     height: 100vh;
 }
 
+		.main{
+		display: flex;
+	    justify-content: center;
+	    align-items: center;
+		
+		}
+ 		nav{
+        	
+  			background-color: #333; 
+  			padding: 10px 30px; 
+  			color: white;
+        }
+        nav ul{
+            display: flex;                  
+		    flex-direction: row;            
+		    justify-content: space-between;
+		    list-style: none;
+		    allign-items:center;
+        }
+        nav ul li a{
+        	text-decoration: none;
+        	color: white;
+        }
+        
+        .navsub{
+        	display: flex;                   
+		    flex-direction: row;            
+		    justify-content: space-around;
+		    gap:50px;
+        }
 .container {
     background-color: white;
     padding: 30px;
@@ -36,7 +63,7 @@
 h2 {
     text-align: center;
     color: #090946;
-    margin-bottom: 20px;
+    margin:50px 0 50px;
 }
 
 .input-group {
@@ -51,13 +78,19 @@ label {
 }
 
 input {
-    width: 100%;
+    width: 300px;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ddd;
     font-size: 16px;
 }
-
+textarea{
+	width: 300px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+}
 .input-group-row {
     display: flex;
     justify-content: space-between; 
@@ -122,6 +155,16 @@ input {
 <jsp:include page="AdminHeader.jsp" />
 
 <body>
+<nav>
+	<ul>
+		<li>Rooms</li>
+		<div class="navsub">
+			<li><%= username %></li>
+			<li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
+		</div>
+	</ul>
+</nav>
+<section class="main">
 <c:if test="${service != null}">
     <form action="${pageContext.request.contextPath}/updateService" method="post">
 </c:if>
@@ -166,8 +209,8 @@ input {
 
  <input type="hidden" name="m_id" value="<%= MuserId %>">
 
-<button type="submit">Submit Service</button>
+<button class="btn" type="submit">Submit Service</button>
 </form>
-
+</section>
 </body>
 </html>
