@@ -62,7 +62,7 @@ public class ReadUserProfile extends HttpServlet {
         }
         
         // Check if user and bookingsWithPayments are valid
-        if (user != null && bookingsWithPayments != null && !bookingsWithPayments.isEmpty()) {
+       
             // Set objects as attributes to be used in the JSP
             request.setAttribute("user", user);
             request.setAttribute("bookingsWithPayments", bookingsWithPayments);
@@ -70,10 +70,9 @@ public class ReadUserProfile extends HttpServlet {
             // Forward to the user profile JSP
             RequestDispatcher dispatcher = request.getRequestDispatcher("views/userProfile.jsp");
             dispatcher.forward(request, response);
-        } else {
-            request.setAttribute("errorMessage", "Unable to view the user profile at this time.");
-            request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
-        }
+       
+           
+       
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -105,9 +105,7 @@
     List<BookingWithPayments> bookingsWithPayments = (List<BookingWithPayments>) request.getAttribute("bookingsWithPayments");
     if (bookingsWithPayments == null || bookingsWithPayments.isEmpty()) {
 %>
-        <div style="color: red; font-weight: bold;">
-            No booking information available. Please check back later or try again.
-        </div>
+        
 <%
         // No initialization of bookingsWithPayments as an empty list
     }

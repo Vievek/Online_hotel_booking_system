@@ -236,7 +236,7 @@ public class user_util {
     	    return user; // Return the User object or null if not found
     	}
        
-       public static boolean updateUser(int userId, String name, String email, String phone, String username, String password, String profile) {
+       public static boolean updateUser(int userId, String name, String email, String phone, String username, String password) {
     	    boolean isSuccess = false;  // Track if the update is successful
 
     	    try {
@@ -244,7 +244,7 @@ public class user_util {
     	        con = DBconnect.getConnection();
     	        
     	        // Update query to modify the user data in the 'user' table
-    	        String updateUserSql = "UPDATE user SET name = ?, email = ?, phone = ?, username = ?, password = ?, profile = ? WHERE id = ?";
+    	        String updateUserSql = "UPDATE user SET name = ?, email = ?, phone = ?, username = ?, password = ? WHERE id = ?";
     	        
     	        // Using PreparedStatement to avoid SQL injection
     	        pstmt = con.prepareStatement(updateUserSql);
@@ -253,8 +253,7 @@ public class user_util {
     	        pstmt.setString(3, phone);
     	        pstmt.setString(4, username);
     	        pstmt.setString(5, password);
-    	        pstmt.setString(6, profile);  // Updating the profile image path
-    	        pstmt.setInt(7, userId);  // Update based on userId
+    	        pstmt.setInt(6, userId);  // Update based on userId
     	        
     	        // Execute the update query
     	        int rowsAffected = pstmt.executeUpdate();

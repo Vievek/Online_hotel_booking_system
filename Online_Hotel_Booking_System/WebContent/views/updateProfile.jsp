@@ -82,7 +82,7 @@
 <body>
 <h2>User Edit Form</h2>
 
-<form action="${pageContext.request.contextPath}/UpdateUserProfile" method="post" enctype="multipart/form-data">
+<form action="${pageContext.request.contextPath}/UpdateUserProfile" method="post" >
     <input type="hidden" name="uid" value="${user.id}">
     <input type="hidden" name="ruid" value="${ru_id}">
 
